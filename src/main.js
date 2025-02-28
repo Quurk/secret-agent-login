@@ -1,0 +1,86 @@
+import { createApp } from 'vue'
+import './style.css'
+import App from './App.vue'
+import { createAppKit } from '@reown/appkit'
+import { mainnet, arbitrum } from '@reown/appkit/networks'
+import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
+
+
+const launhGameBtn = document.getElementById('launch-game')
+const openConnectModalBtn = document.getElementById('modal-connect')
+const walletAddressText = document.getElementById('wallet-address');
+const url = "https://secret-agent-game-service.zsrc0bmba5xht.ap-southeast-1.cs.amazonlightsail.com/";
+
+
+// 1. Get a project ID at https://cloud.reown.com
+const projectId = '2715a50f9ddd7801359129d5d2b8c092'
+
+export const networks = [mainnet, arbitrum]
+export function setWalletAddressText(msg){
+    walletAddressText.textContent = `${msg}`;
+    // const params = {
+    //   walletAddress: msg,
+    // };
+    // openUrlWithParams(url, params);
+
+}
+
+function launchGame(params){
+    openUrlWithParams(url, params);
+}
+
+// 2. Set up Wagmi adapter
+const wagmiAdapter = new WagmiAdapter({
+  projectId,
+  networks
+})
+
+// 3. Configure the metadata
+const metadata = {
+  name: 'AppKit',
+  description: 'AppKit Example',
+  url: 'https://reown.com/appkit', // origin must match your domain & subdomain
+  icons: ['https://avatars.githubusercontent.com/u/179229932']
+}
+
+
+// 3. Create the modal
+const modal = createAppKit({
+  adapters: [wagmiAdapter],
+  networks: [mainnet, arbitrum],
+  metadata,
+  projectId,
+  features: {
+    analytics: true // Optional - defaults to your Cloud configuration
+  }
+})
+
+const getWalletAddress = function getAddress(){
+    let address = modal.getAddress();
+    return address.toLowerCase();
+}
+
+// Function to construct URL with query parameters and open it
+function openUrlWithParams(baseUrl, params) {
+  // Create a URLSearchParams object from the params object
+  const queryParams = new URLSearchParams(params);
+  
+  // Construct the full URL with query parameters
+  const fullUrl = `${baseUrl}?${queryParams.toString()}`;
+  
+  // Open the URL in the current browser window
+  window.location.href = fullUrl;
+}
+
+
+modal.subscribeWalletInfo( ()=> setWalletAddressText(getWalletAddress()));
+
+// modal.subscribeState()
+openConnectModalBtn.addEventListener('click', () => modal.open())
+
+launhGameBtn.addEventListener('click', ()=> launchGame(getWalletAddress()));
+
+// openNetworkModalBtn.addEventListener('click', () => modal.open({ view: 'Networks' }))
+
+
+createApp(App).mount('#app')
