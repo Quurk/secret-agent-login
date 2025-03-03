@@ -6,8 +6,8 @@ import { mainnet, arbitrum } from '@reown/appkit/networks'
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 
 // 1. Get a project ID at https://cloud.reown.com
-const projectId = '2715a50f9ddd7801359129d5d2b8c092'
-const url = "https://secret-agent-game-service.zsrc0bmba5xht.ap-southeast-1.cs.amazonlightsail.com/";
+const projectId = import.meta.env.VITE_PROJECT_ID;
+const url = import.meta.env.VITE_GAME_URL;
 
 const launhGameBtn = document.getElementById('launch-game')
 const openConnectModalBtn = document.getElementById('modal-connect')
@@ -20,12 +20,14 @@ function setWalletAddressText(msg){
 }
 
 function launchGame(walletAddress){
-    openUrlWithParams(url, walletAddress);
+    const params = new URLSearchParams({
+      walletAddress: walletAddress
+    })
+    openUrlWithParams(url, params);
 }
 
 function openUrlWithParams(baseUrl, params) {
-  const queryParams = new URLSearchParams(params);
-  const fullUrl = `${baseUrl}?${queryParams.toString()}`;
+  const fullUrl = `${baseUrl}?${params.toString()}`;
 
   window.open(fullUrl, '_blank');
 }
