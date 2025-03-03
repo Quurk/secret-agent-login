@@ -5,28 +5,32 @@ import { createAppKit } from '@reown/appkit'
 import { mainnet, arbitrum } from '@reown/appkit/networks'
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 
+// 1. Get a project ID at https://cloud.reown.com
+const projectId = '2715a50f9ddd7801359129d5d2b8c092'
+const url = "https://secret-agent-game-service.zsrc0bmba5xht.ap-southeast-1.cs.amazonlightsail.com/";
 
 const launhGameBtn = document.getElementById('launch-game')
 const openConnectModalBtn = document.getElementById('modal-connect')
 const walletAddressText = document.getElementById('wallet-address');
-const url = "https://secret-agent-game-service.zsrc0bmba5xht.ap-southeast-1.cs.amazonlightsail.com/";
 
 
-// 1. Get a project ID at https://cloud.reown.com
-const projectId = '2715a50f9ddd7801359129d5d2b8c092'
+
+
 
 export const networks = [mainnet, arbitrum]
 export function setWalletAddressText(msg){
     walletAddressText.textContent = `${msg}`;
-    // const params = {
-    //   walletAddress: msg,
-    // };
-    // openUrlWithParams(url, params);
-
 }
 
 function launchGame(params){
     openUrlWithParams(url, params);
+}
+
+function openUrlWithParams(baseUrl, params) {
+  const queryParams = new URLSearchParams(params);
+  const fullUrl = `${baseUrl}?${queryParams.toString()}`;
+
+  window.open(fullUrl, '_blank');
 }
 
 // 2. Set up Wagmi adapter
@@ -60,17 +64,7 @@ const getWalletAddress = function getAddress(){
     return address.toLowerCase();
 }
 
-// Function to construct URL with query parameters and open it
-function openUrlWithParams(baseUrl, params) {
-  // Create a URLSearchParams object from the params object
-  const queryParams = new URLSearchParams(params);
-  
-  // Construct the full URL with query parameters
-  const fullUrl = `${baseUrl}?${queryParams.toString()}`;
-  
-  // Open the URL in the current browser window
-  window.location.href = fullUrl;
-}
+
 
 
 modal.subscribeWalletInfo( ()=> setWalletAddressText(getWalletAddress()));
