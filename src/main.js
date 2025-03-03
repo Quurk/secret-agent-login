@@ -13,17 +13,14 @@ const launhGameBtn = document.getElementById('launch-game')
 const openConnectModalBtn = document.getElementById('modal-connect')
 const walletAddressText = document.getElementById('wallet-address');
 
+const networks = [mainnet, arbitrum]
 
-
-
-
-export const networks = [mainnet, arbitrum]
-export function setWalletAddressText(msg){
+function setWalletAddressText(msg){
     walletAddressText.textContent = `${msg}`;
 }
 
-function launchGame(params){
-    openUrlWithParams(url, params);
+function launchGame(walletAddress){
+    openUrlWithParams(url, walletAddress);
 }
 
 function openUrlWithParams(baseUrl, params) {
@@ -47,7 +44,6 @@ const metadata = {
   icons: ['https://avatars.githubusercontent.com/u/179229932']
 }
 
-
 // 3. Create the modal
 const modal = createAppKit({
   adapters: [wagmiAdapter],
@@ -64,17 +60,11 @@ const getWalletAddress = function getAddress(){
     return address.toLowerCase();
 }
 
-
-
-
 modal.subscribeWalletInfo( ()=> setWalletAddressText(getWalletAddress()));
-
-// modal.subscribeState()
 openConnectModalBtn.addEventListener('click', () => modal.open())
-
 launhGameBtn.addEventListener('click', ()=> launchGame(getWalletAddress()));
 
-// openNetworkModalBtn.addEventListener('click', () => modal.open({ view: 'Networks' }))
+// modal.subscribeState( () )
 
 
 createApp(App).mount('#app')
