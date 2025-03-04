@@ -6,7 +6,7 @@ import { mainnet, arbitrum } from '@reown/appkit/networks'
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 
 // 1. Get a project ID at https://cloud.reown.com
-const projectId = import.meta.env.VITE_PROJECT_ID;
+const projectId = import.meta.env.VITE_REOWN_PROJECT_ID;
 const url = import.meta.env.VITE_GAME_URL;
 
 const launhGameBtn = document.getElementById('launch-game')
