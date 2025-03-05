@@ -27,8 +27,8 @@ jobs:
       - name: Build project
         run: npm run build
         env:
-          VITE_REOWN_PROJECT_ID: ${{ vars.VITE_REOWN_PROJECT_ID }}
-          VITE_GAME_URL: ${{ vars.VITE_GAME_URL }}
+          VITE_REOWN_PROJECT_ID: ${{ secrets.VITE_REOWN_PROJECT_ID }}
+          VITE_GAME_URL: ${{ secrets.VITE_GAME_URL }}
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
