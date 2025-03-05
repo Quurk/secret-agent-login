@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: write  # Grants write access to repository contents
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -32,4 +35,5 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
+
 
