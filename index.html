@@ -4,18 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wallet Authentication</title>
+
 </head>
 <body>
   <script type="module" src="./src/main.js"></script>
   <div>   
     <div>
-      <h1>Wallet Authentication</h1>
-      <button id="modal-connect">Connect</button>
-      <button id="launch-game">Launch Game</button>
+      <h1>Welcome to Secret Agent</h1>
+      <p data-disconnected-only="">Login to your wallet to start playing the game</p>
+      <p data-connected-only="">Click Launch Game to start playing!</p>
+
+    </div>
+
+    </div>
+      <button id="btn-connect" data-disconnected-only>Connect</button>
+      <button id="btn-manageWallet" data-connected-only>Manage Wallet</button>
+      <button id="btn-launchGame" class="button1" data-connected-only>Launch Game</button>
+
       <div>    
-    </div>
-    <h2 id="wallet-address">Wallet Address: </h2>
-    </div>
+        <p id="wallet-address" class="p2" data-connected-only>Connected to: </p>
   </div>
 </body>
 </html>
