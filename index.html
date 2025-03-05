@@ -5,25 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wallet Authentication</title>
 
-  <script type="module" crossorigin src="/secret-agent-login/assets/index-DYE0YtCs.js"></script>
-  <link rel="stylesheet" crossorigin href="/secret-agent-login/assets/index-VxGhmUXW.css">
+  <script type="module" crossorigin src="/secret-agent-login/assets/index-CcYw4UpW.js"></script>
+  <link rel="stylesheet" crossorigin href="/secret-agent-login/assets/index-DmeoKztz.css">
 </head>
 <body>
-  <div>   
+  <div>    
     <div>
-      <h1>Welcome to Secret Agent</h1>
-      <p data-disconnected-only="">Login to your wallet to start playing the game</p>
-      <p data-connected-only="">Click Launch Game to start playing!</p>
+      <div data-disconnected-only style="margin-top: -4em">      
+        <p class="title1">Welcome to</p>
+        <p class="title2">
+          <span class="diamond">◆</span>
+          Secret Agent<span class="diamond">◆</span>
+        </p>
+      </div>
+
+      <div data-connected-only style="margin-top: -1em">      
+        <p class="title1">Welcome to</p>
+        <p class="title2">
+          <span class="diamond">◆</span>
+          Secret Agent<span class="diamond">◆</span>
+        </p>
+      </div>
+
+      <div>
+
+        <div style="margin-top: -2em;">
+          <p data-disconnected-only>Login to your wallet to start playing the game</p>
+          <button id="btn-connect" data-disconnected-only>Connect&#10209;</button>
+        </div>
+
+        <div>
+          <p data-connected-only>Click LAUNCH GAME to start playing</p>
+          <button id="btn-manageWallet" data-connected-only>Manage Wallet</button>
+          <button id="btn-launchGame" class="button1" data-connected-only>Launch Game</button>
+        </div>
+
+      </div>
+
+
 
     </div>
-
-    </div>
-      <button id="btn-connect" data-disconnected-only>Connect</button>
-      <button id="btn-manageWallet" data-connected-only>Manage Wallet</button>
-      <button id="btn-launchGame" class="button1" data-connected-only>Launch Game</button>
-
-      <div>    
-        <p id="wallet-address" class="p2" data-connected-only>Connected to: </p>
+    <p id="wallet-address" class="p2" data-connected-only>Connected to: </p>
   </div>
 </body>
 </html>
