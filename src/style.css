@@ -1,5 +1,6 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  /* font-family: system-ui, Avenir, Helvetica, Arial, sans-serif; */
+  font-family: 'Figtree';
   line-height: 1.5;
   font-weight: 400;
   color-scheme: light dark;
@@ -63,7 +64,7 @@ h1 {
 }
 
 button {
-  border-radius: 1rem;
+  border-radius: .4em;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1.5em;
@@ -89,7 +90,7 @@ button:focus-visible {
 }
 
 .button1{
-  border-radius: 8px;
+  border-radius: .4em;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1.5em;
@@ -148,5 +149,5 @@ button:focus-visible {
   margin-top: -20px;
   color:#aaa572;
   text-transform: uppercase;
-  letter-spacing: .15em;
+  letter-spacing: .12em;
 }
