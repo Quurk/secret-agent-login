@@ -75,7 +75,7 @@ function onAppkitStateChanged(newState){
     openConnectModalBtn.textContent = "Connect";
   }
   else{
-    setWalletAddressText(`Logged into: ${getWalletAddress()}`);
+    setWalletAddressText(`${getWalletAddress()}`);
     openConnectModalBtn.textContent = "Connected \u2713";
   }
 

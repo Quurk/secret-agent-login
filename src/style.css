@@ -41,18 +41,17 @@ p {
 .p2{
   font-weight: 380;
   font-size: 0.9em;
-  margin-top: 5em;
+  margin-top: -1em;
 }
 
 .diamond{
   font-weight: 380;
   font-size: 0.4em;
-  margin-top: 40px;
   vertical-align: middle;
 }
 
 div {
-  display: -webkit-flex;
+  display: flex;
   flex-direction: column;
   align-items: center; /* Center elements within the div */
 }
@@ -64,7 +63,7 @@ h1 {
 }
 
 button {
-  border-radius: 8px;
+  border-radius: 1rem;
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1.5em;
