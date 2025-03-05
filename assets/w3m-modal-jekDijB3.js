@@ -1,4 +1,4 @@
-import{a as U,r as T,O as y,M as i,b as n,A as k,d as C,x as w,o as I,R as h,e as N,T as O,f as L,h as K,j as R,k as z,l as M,m as P,p,q as $}from"./index-t34DCSQq.js";const W=U`
+import{a as U,r as T,O as y,M as i,b as n,A as k,d as C,x as w,o as I,R as h,e as N,T as O,f as L,h as K,j as R,k as z,l as M,m as P,p,q as $}from"./index-BRlfbhRw.js";const W=U`
   :host {
     z-index: var(--w3m-z-index);
     display: block;
