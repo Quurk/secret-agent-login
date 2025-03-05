@@ -45,10 +45,8 @@ p {
 }
 
 .diamond{
-  font-weight: 4em;
-  font-size: 1.5rem;
+  font-size: 1rem;
   vertical-align: middle;
-  align-items: center;
 }
 
 div {
