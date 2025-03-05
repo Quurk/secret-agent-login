@@ -4,7 +4,7 @@
   font-weight: 400;
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #1a1a1a;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -32,18 +32,27 @@ body {
 
 p {
   font-weight: 380;
-  font-size: 1.5em;
-  margin-bottom: 1.5em;
+  font-size: 1em;
+  
+  margin-bottom: 1em;
+  color: #807b48;
 }
 
 .p2{
   font-weight: 380;
   font-size: 0.9em;
+  margin-top: 5em;
+}
+
+.diamond{
+  font-weight: 380;
+  font-size: 0.4em;
   margin-top: 40px;
+  vertical-align: middle;
 }
 
 div {
-  display: flex;
+  display: -webkit-flex;
   flex-direction: column;
   align-items: center; /* Center elements within the div */
 }
@@ -51,6 +60,7 @@ div {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+  color: #807b48;
 }
 
 button {
@@ -58,19 +68,25 @@ button {
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1.5em;
-  font-weight: 460;
+  font-weight: 640;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: #240e2f;
   cursor: pointer;
   transition: border-color 0.25s;
-  margin-bottom: 20px; /* Add spacing between buttons */
+  margin-top: 10px;
+  margin-bottom: 10px; 
+  color:#cbc693;
+  border-color: #aaa572;
+  text-transform: uppercase;
+  width: 12em;
 }
 button:hover {
-  border-color: #646cff;
+  background-color: #aaa572;
+  color: #151515;
 }
 button:focus,
 button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  outline: 4px auto #cbc693;
 }
 
 .button1{
@@ -78,20 +94,22 @@ button:focus-visible {
   border: 1px solid transparent;
   padding: 0.6em 1.2em;
   font-size: 1.5em;
-  font-weight: 460;
+  font-weight: 640;
   font-family: inherit;
-  background-color: #646cff;
+  background-color: #cbc693;
   cursor: pointer;
   transition: border-color 0.25s;
   margin-bottom: 20px; /* Add spacing between buttons */
+  color: #151515;
+  
 }
 
 .button1:hover{
-  border-color: #ffffff;
+  border-color: #807b48;
 }
 .button1:focus,
 .button1:focus-visible {
-  outline: 4px auto #ffffff;
+  outline: 4px auto #807b48;
 }
 
 .card {
@@ -118,6 +136,18 @@ button:focus-visible {
   }
 }
 
-.checkmark {
-  color: green;
+.title1{
+  font-weight: 380;
+  font-size: 1.5em;
+  color:#807b48;
+  text-transform: uppercase;
+}
+
+.title2{
+  font-weight: 780;
+  font-size: 3.5em;
+  margin-top: -20px;
+  color:#aaa572;
+  text-transform: uppercase;
+  letter-spacing: .15em;
 }
