@@ -141,6 +141,8 @@ button:focus-visible {
   font-size: 1.5em;
   color:#807b48;
   text-transform: uppercase;
+  padding: 10px;
+  text-align: center;
 }
 
 .title2{
@@ -150,4 +152,6 @@ button:focus-visible {
   color:#aaa572;
   text-transform: uppercase;
   letter-spacing: .12em;
+  padding: 10px;
+  text-align: center;
 }
