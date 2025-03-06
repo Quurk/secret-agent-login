@@ -44,8 +44,11 @@ const appkit = createAppKit({
 
 document.addEventListener('DOMContentLoaded', (event) => {
     setGameRunningState(false);
-    type();
 });
+
+window.onload = () => {
+  setTimeout(type, 750);
+};
 
 window.addEventListener('beforeunload', () => {
   setGameRunningState('false');
@@ -143,9 +146,9 @@ const text = element.innerHTML;
 let index = 0;
 element.innerHTML = "";
 function type() {
-    if (index < text.length) {
-        element.innerHTML += text.charAt(index);
-        index++;
-        setTimeout(type, 135); // Adjust the speed here (100ms for each letter)
-    }
+  if (index < text.length) {
+    element.innerHTML += text.charAt(index);
+    index++;
+    setTimeout(type, 135); // Adjust the speed here (100ms for each letter)
+  }
 }
