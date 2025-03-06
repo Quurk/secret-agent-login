@@ -37,21 +37,11 @@ body {
 
 p {
   font-weight: 380;
-  font-size: 1em;
+  font-size: 1.5em;
   margin-bottom: 1em;
   color: #807b48;
 }
 
-.p2{
-  font-weight: 380;
-  font-size: 0.9em;
-  margin-top: -1em;
-}
-
-.diamond{
-  font-size: 1.5rem;
-  vertical-align: middle;
-}
 
 div {
   display: flex;
@@ -91,6 +81,23 @@ button:focus-visible {
   outline: 4px auto #cbc693;
 }
 
+
+.p2{
+  font-weight: 380;
+  font-size: 0.9em;
+  margin-top: -1em;
+}
+
+/* .diamond{
+  font-size: 1.5rem;
+  vertical-align: middle;
+} */
+
+.diamond {
+  color: #aaa572;
+}
+
+
 .button1{
   border-radius: .4em;
   border: 1px solid transparent;
@@ -112,6 +119,49 @@ button:focus-visible {
 .button1:focus,
 .button1:focus-visible {
   outline: 4px auto #807b48;
+}
+
+.title1{
+  font-weight: 380;
+  font-size: 2em;
+  color:#807b48;
+  text-transform: uppercase;
+  padding: 10px;
+  text-align: center;
+  margin-top: -1em;
+  margin-bottom: 3em;
+}
+
+.title2{
+  font-weight: 780;
+  font-size: 15em;
+  color:#aaa572;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  padding-left: .5em;
+  padding-right: .5em;
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  flex-direction: row;
+}
+.container span {
+  font-size: 4.5em;
+  margin-top: -1.4em;
+  margin-bottom: 1em;
+}
+
+.container .diamond{
+  margin-top: -4em;
+  margin-left: -1em;
+  margin-right: -.5em;
+  padding-left: 1em;
+  padding-right: 1em;
+  font-size: 2em;
 }
 
 .card {
@@ -137,29 +187,16 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
 @media (max-width: 600px) {
-  html {
-      font-size: 14px; /* Adjust font size for smaller screens */
+  .container {
+      display: block;
   }
-}
-
-.title1{
-  font-weight: 380;
-  font-size: 1.5em;
-  color:#807b48;
-  text-transform: uppercase;
-  padding: 10px;
-  text-align: center;
-}
-
-.title2{
-  font-weight: 780;
-  font-size: 3.5em;
-  margin-top: -20px;
-  color:#aaa572;
-  text-transform: uppercase;
-  letter-spacing: .12em;
-  padding-left: .5em;
-  padding-right: .5em;
-  text-align: center;
+  .title {
+      display: block;
+      margin-bottom: 10px;
+  }
+  .subtitle {
+      display: block;
+  }
 }
