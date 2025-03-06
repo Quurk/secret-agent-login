@@ -44,6 +44,7 @@ const appkit = createAppKit({
 
 document.addEventListener('DOMContentLoaded', (event) => {
     setGameRunningState(false);
+    type();
 });
 
 window.addEventListener('beforeunload', () => {
@@ -62,10 +63,7 @@ createApp(App).mount('#app')
 
 
 
-
-
 function onAppkitStateChanged(newState){
-
   const isConnected = appkit.getIsConnectedState();
 
   updateElementsVisibility(isConnected);
@@ -78,9 +76,6 @@ function onAppkitStateChanged(newState){
     setWalletAddressText(`${getWalletAddress()}`);
     openConnectModalBtn.textContent = "Connected \u2713";
   }
-
-
-
 }
 
 const getWalletAddress = function getAddress(){
@@ -140,4 +135,17 @@ function createGameWindow(fullUrl){
   });
 
   return gameWindow;
+}
+
+const element = document.getElementById('typewriter');
+const text = element.innerHTML;
+
+let index = 0;
+element.innerHTML = "";
+function type() {
+    if (index < text.length) {
+        element.innerHTML += text.charAt(index);
+        index++;
+        setTimeout(type, 135); // Adjust the speed here (100ms for each letter)
+    }
 }
