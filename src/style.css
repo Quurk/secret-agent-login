@@ -146,6 +146,10 @@ button:focus-visible {
   text-transform: uppercase;
   letter-spacing: .12em;
   /* animation: fadeIn 2s ease-in-out forwards; */
+
+}
+
+.typewriter .title2{
   border-right: 0.1em solid #aaa572; /* Cursor effect */
   animation: blink-caret 1s step-end infinite;
 }

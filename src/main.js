@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 
 window.onload = () => {
-  setTimeout(type, 750);
+  setTimeout(type, 900);
 };
 
 window.addEventListener('beforeunload', () => {
@@ -151,13 +151,13 @@ function type() {
     index++;
     setTimeout(type, 135); // Adjust the speed here (100ms for each letter)
   }
-  else{
-    setTimeout(
-      ()=> {
-        const typewriter = document.getElementById('typewriter');
-        typewriter.classList.add('no-cursor');
-      },
-      1250
-    );
-  }
+  // else{
+  //   setTimeout(
+  //     ()=> {
+  //       const typewriter = document.getElementById('typewriter');
+  //       typewriter.classList.add('no-cursor');
+  //     },
+  //     1500
+  //   );
+  // }
 }
