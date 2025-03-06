@@ -146,6 +146,8 @@ button:focus-visible {
   text-transform: uppercase;
   letter-spacing: .12em;
   /* animation: fadeIn 2s ease-in-out forwards; */
+  border-right: 0.1em solid #aaa572; /* Cursor effect */
+  animation: blink-caret 1s step-end infinite;
 }
 
 
@@ -209,3 +211,11 @@ button:focus-visible {
   to { opacity: 1; }
 }
 
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: #aaa572; }
+}
+
+.no-cursor{
+  border-right: none;
+}

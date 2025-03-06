@@ -151,4 +151,13 @@ function type() {
     index++;
     setTimeout(type, 135); // Adjust the speed here (100ms for each letter)
   }
+  else{
+    setTimeout(
+      ()=> {
+        const typewriter = document.getElementById('typewriter');
+        typewriter.classList.add('no-cursor');
+      },
+      1050
+    );
+  }
 }
