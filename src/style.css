@@ -1,3 +1,7 @@
+html{
+  font-size: 16px;
+}
+
 :root {
   /* font-family: system-ui, Avenir, Helvetica, Arial, sans-serif; */
   font-family: 'Figtree';
@@ -131,6 +135,11 @@ button:focus-visible {
   }
   button {
     background-color: #f9f9f9;
+  }
+}
+@media (max-width: 600px) {
+  html {
+      font-size: 14px; /* Adjust font size for smaller screens */
   }
 }
 
