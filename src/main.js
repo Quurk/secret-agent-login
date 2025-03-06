@@ -157,7 +157,7 @@ function type() {
         const typewriter = document.getElementById('typewriter');
         typewriter.classList.add('no-cursor');
       },
-      1050
+      1250
     );
   }
 }
