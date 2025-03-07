@@ -59,9 +59,8 @@ window.addEventListener('beforeunload', () => {
 openConnectModalBtn.addEventListener('click', () => appkit.open())
 manageWalletBtn.addEventListener('click', () => appkit.open())
 launhGameBtn.addEventListener('click', ()=> launchGame(getWalletAddress()));
-
-
 appkit.subscribeState( (newState) => onAppkitStateChanged());
+
 createApp(App).mount('#app')
 
 
@@ -149,15 +148,6 @@ function type() {
   if (index < text.length) {
     element.innerHTML += text.charAt(index);
     index++;
-    setTimeout(type, 135); // Adjust the speed here (100ms for each letter)
+    setTimeout(type, 135); // Speed for each letter to appear (ms)
   }
-  // else{
-  //   setTimeout(
-  //     ()=> {
-  //       const typewriter = document.getElementById('typewriter');
-  //       typewriter.classList.add('no-cursor');
-  //     },
-  //     1500
-  //   );
-  // }
 }
