@@ -15,8 +15,17 @@ const launhGameBtn = document.getElementById('btn-launchGame')
 const openConnectModalBtn = document.getElementById('btn-connect')
 const walletAddressText = document.getElementById('wallet-address');
 const manageWalletBtn = document.getElementById('btn-manageWallet');
+const leaderboardBtn = document.getElementById('toggleBtn-leaderboard');
+const leaderboard = document.getElementById('leaderboard');
 
 const networks = [mainnet, arbitrum]
+
+const users = [
+  { name: 'Player1', points: 1200 },
+  { name: 'Player2', points: 1100 },
+  { name: 'Player3', points: 1000 },
+  { name: 'Player4', points: 900 }
+];
 
 let gameWindow;
 
@@ -43,26 +52,43 @@ const appkit = createAppKit({
 })
 
 document.addEventListener('DOMContentLoaded', (event) => {
-    setGameRunningState(false);
+  onDocumentLoaded(event);
 });
 
 window.onload = () => {
-  setTimeout(type, 900);
+  onWindowLoaded();
 };
 
 window.addEventListener('beforeunload', () => {
-  setGameRunningState('false');
-  gameWindow.close();
+  onWindowBeforeUnload();
 });
 
+// populateLeaderboard(users);
 
 openConnectModalBtn.addEventListener('click', () => appkit.open())
 manageWalletBtn.addEventListener('click', () => appkit.open())
 launhGameBtn.addEventListener('click', ()=> launchGame(getWalletAddress()));
 appkit.subscribeState( (newState) => onAppkitStateChanged());
 
+//addToggle('toggleBtn-leaderboard', 'leaderboard')
+
 createApp(App).mount('#app')
 
+
+function onDocumentLoaded(event){
+  setGameRunningState(false);
+
+ // leaderboard.classList.add('hidden');
+}
+
+function onWindowLoaded(){
+  setTimeout(type, 900);
+}
+
+function onWindowBeforeUnload(){
+  setGameRunningState('false');
+  gameWindow.close();
+}
 
 
 function onAppkitStateChanged(newState){
@@ -150,4 +176,14 @@ function type() {
     index++;
     setTimeout(type, 135); // Speed for each letter to appear (ms)
   }
+}
+function populateLeaderboard(table) {
+  const leaderboardList = document.getElementById('leaderboard-list');
+  leaderboardList.innerHTML = ''; // Clear existing content
+
+  table.forEach((user, index) => {
+    const listItem = document.createElement('li');
+    listItem.textContent = `${index + 1}. ${user.name} - ${user.points} points`;
+    leaderboardList.appendChild(listItem);
+  });
 }
