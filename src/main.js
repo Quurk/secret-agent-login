@@ -22,7 +22,7 @@ const networks = [mainnet, arbitrum]
 
 const users = [
   { name: 'Player1', points: 1200 },
-  { name: 'Player2', points: 1100 },
+  { name: 'aerganegjkbarejgbahjregbhjerabghrebghabergbahtgbahterbgh', points: 110000000000000000000000000000000 },
   { name: 'Player3', points: 1000 },
   { name: 'Player4', points: 900 },
   { name: 'Player1', points: 1200 },
@@ -42,33 +42,33 @@ const users = [
   { name: 'Player3', points: 1000 },
   { name: 'Player4', points: 900 },
   { name: 'Player1', points: 1200 },
-  { name: 'Player2', points: 1100 },
-  { name: 'Player3', points: 1000 },
-  { name: 'Player4', points: 900 },
-  { name: 'Player1', points: 1200 },
-  { name: 'Player2', points: 1100 },
-  { name: 'Player3', points: 1000 },
-  { name: 'Player4', points: 900 },
-  { name: 'Player1', points: 1200 },
-  { name: 'Player2', points: 1100 },
-  { name: 'Player3', points: 1000 },
-  { name: 'Player4', points: 900 },
-  { name: 'Player1', points: 1200 },
-  { name: 'Player2', points: 1100 },
-  { name: 'Player3', points: 1000 },
-  { name: 'Player4', points: 900 },
-  { name: 'Player1', points: 1200 },
-  { name: 'Player2', points: 1100 },
-  { name: 'Player3', points: 1000 },
-  { name: 'Player4', points: 900 },
-  { name: 'Player1', points: 1200 },
-  { name: 'Player2', points: 1100 },
-  { name: 'Player3', points: 1000 },
-  { name: 'Player4', points: 900 },
-  { name: 'Player1', points: 1200 },
-  { name: 'Player2', points: 1100 },
-  { name: 'Player3', points: 1000 },
-  { name: 'Player4', points: 900 },
+  // { name: 'Player2', points: 1100 },
+  // { name: 'Player3', points: 1000 },
+  // { name: 'Player4', points: 900 },
+  // { name: 'Player1', points: 1200 },
+  // { name: 'Player2', points: 1100 },
+  // { name: 'Player3', points: 1000 },
+  // { name: 'Player4', points: 900 },
+  // { name: 'Player1', points: 1200 },
+  // { name: 'Player2', points: 1100 },
+  // { name: 'Player3', points: 1000 },
+  // { name: 'Player4', points: 900 },
+  // { name: 'Player1', points: 1200 },
+  // { name: 'Player2', points: 1100 },
+  // { name: 'Player3', points: 1000 },
+  // { name: 'Player4', points: 900 },
+  // { name: 'Player1', points: 1200 },
+  // { name: 'Player2', points: 1100 },
+  // { name: 'Player3', points: 1000 },
+  // { name: 'Player4', points: 900 },
+  // { name: 'Player1', points: 1200 },
+  // { name: 'Player2', points: 1100 },
+  // { name: 'Player3', points: 1000 },
+  // { name: 'Player4', points: 900 },
+  // { name: 'Player1', points: 1200 },
+  // { name: 'Player2', points: 1100 },
+  // { name: 'Player3', points: 1000 },
+  // { name: 'Player4', points: 900 },
 ];
 
 let gameWindow;
@@ -122,7 +122,7 @@ createApp(App).mount('#app')
 function onDocumentLoaded(event){
   setGameRunningState(false);
 
-  closeLeaderboard();
+ //closeLeaderboard();
 }
 
 function onWindowLoaded(){
@@ -223,11 +223,63 @@ function type() {
 }
 function populateLeaderboard(table) {
   const leaderboardList = document.getElementById('leaderboard-list');
-  leaderboardList.innerHTML = ''; // Clear existing content
+  const header = leaderboardList.querySelector('.header');
+
+
+  while (leaderboardList.firstChild) {
+    if (leaderboardList.firstChild !== header) {
+      leaderboardList.removeChild(leaderboardList.firstChild);
+    } else {
+        break;
+    }
+  }
+
 
   table.forEach((user, index) => {
-    const listItem = document.createElement('li');
-    listItem.textContent = `${index + 1}. ${user.name} - ${user.points} points`;
-    leaderboardList.appendChild(listItem);
+    addScore(index+1, user.name, "malaysia", user.points);
   });
+
+
+  function addScore(rank, username, country, score) {
+    const scoreList = document.getElementById('leaderboard-list');
+    
+    // Create a new list item
+    const listItem = document.createElement('li');
+
+    // Create and append the username span
+    const rankSpan = document.createElement('span');
+    rankSpan.classList.add('span');
+    rankSpan.textContent = rank;
+    listItem.appendChild(rankSpan);
+
+    // Create and append the username span
+    const usernameSpan = document.createElement('span');
+    usernameSpan.classList.add('username');
+    usernameSpan.textContent = username;
+    listItem.appendChild(usernameSpan);
+    
+    // Create and append the country span
+    const countrySpan = document.createElement('span');
+    countrySpan.classList.add('country');
+    countrySpan.textContent = country;
+    listItem.appendChild(countrySpan);
+    
+    // Create and append the score span
+    const scoreSpan = document.createElement('span');
+    scoreSpan.classList.add('points');
+    scoreSpan.textContent = score;
+    listItem.appendChild(scoreSpan);
+
+    // Append the new list item to the scoreboard
+    scoreList.appendChild(listItem);
 }
+
+}
+
+function updateRanking(ranking) {
+  const rankingElement = document.getElementById('self-ranking');
+  rankingElement.textContent = `Your Ranking: #${ranking}`;
+}
+
+// Example usage: Update the user's ranking
+updateRanking(1); // Set the initial ranking

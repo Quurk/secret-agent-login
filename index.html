@@ -34,6 +34,7 @@
         <div>
           <p data-connected-only>Click LAUNCH GAME to start playing</p>
           <button id="btn-manageWallet" data-connected-only>Manage Wallet</button>
+          <button id="toggleBtn-leaderboard" onclick="openLeaderboard()">Leaderboard</button>
           <button id="btn-launchGame" class="button1" data-connected-only>Launch Game</button>
         </div>
 
@@ -41,31 +42,41 @@
           <p class="p2">Logged Into:</p>
           <p id="wallet-address" class="p2">Not Connected</p>
         </div>
-        <!-- <button id="toggleBtn-leaderboard" class="button-sqr" onclick="openLeaderboard()">=</button>
+
         <script>
           function openLeaderboard(){
             document.getElementById('leaderboard').style.display = '';
           }
-        </script> -->
-      </div>
-      <div class="panel" id="leaderboard">
-  
-        <div class="leaderboard" >
-          <h2>Leaderboard</h2>
-          <button class="button-sqr" onclick="closeLeaderboard()">×</button>
-
-          <ul id="leaderboard-list">
-          </ul>
-          <script>
-            function closeLeaderboard() {
-              document.getElementById('leaderboard').style.display = 'none';
-            }
-          </script>
-      </div>
+        </script>
 
       </div>
     </div>
   </div>
+  </div>
+
+  <div class="leaderboard" id="leaderboard">
+    <div class="container">
+      <div class="panel" >
+        <h2>Leaderboard</h2>
+        <!-- <button class="button-sqr" onclick="closeLeaderboard()">×</button> -->
+  
+        <ul id="leaderboard-list">
+          <li class="header">
+          <span class="rank">Rank</span>
+          <span class="username">Username</span>
+          <span class="country">Country</span>
+          <span class="points">Points</span>
+        </li>
+        </ul>
+  
+        <script>
+          function closeLeaderboard() {
+            document.getElementById('leaderboard').style.display = 'none';
+          }
+        </script>
+      <div><span class="self-ranking" id="self-ranking">Self</span></div>
+      <div><button class="btn-close" onclick="closeLeaderboard()">Close</button></div>
+    </div>
 </body>
 
 </html>
