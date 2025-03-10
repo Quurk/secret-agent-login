@@ -24,7 +24,51 @@ const users = [
   { name: 'Player1', points: 1200 },
   { name: 'Player2', points: 1100 },
   { name: 'Player3', points: 1000 },
-  { name: 'Player4', points: 900 }
+  { name: 'Player4', points: 900 },
+  { name: 'Player1', points: 1200 },
+  { name: 'Player2', points: 1100 },
+  { name: 'Player3', points: 1000 },
+  { name: 'Player4', points: 900 },
+  { name: 'Player1', points: 1200 },
+  { name: 'Player2', points: 1100 },
+  { name: 'Player3', points: 1000 },
+  { name: 'Player4', points: 900 },
+  { name: 'Player1', points: 1200 },
+  { name: 'Player2', points: 1100 },
+  { name: 'Player3', points: 1000 },
+  { name: 'Player4', points: 900 },
+  { name: 'Player1', points: 1200 },
+  { name: 'Player2', points: 1100 },
+  { name: 'Player3', points: 1000 },
+  { name: 'Player4', points: 900 },
+  { name: 'Player1', points: 1200 },
+  { name: 'Player2', points: 1100 },
+  { name: 'Player3', points: 1000 },
+  { name: 'Player4', points: 900 },
+  { name: 'Player1', points: 1200 },
+  { name: 'Player2', points: 1100 },
+  { name: 'Player3', points: 1000 },
+  { name: 'Player4', points: 900 },
+  { name: 'Player1', points: 1200 },
+  { name: 'Player2', points: 1100 },
+  { name: 'Player3', points: 1000 },
+  { name: 'Player4', points: 900 },
+  { name: 'Player1', points: 1200 },
+  { name: 'Player2', points: 1100 },
+  { name: 'Player3', points: 1000 },
+  { name: 'Player4', points: 900 },
+  { name: 'Player1', points: 1200 },
+  { name: 'Player2', points: 1100 },
+  { name: 'Player3', points: 1000 },
+  { name: 'Player4', points: 900 },
+  { name: 'Player1', points: 1200 },
+  { name: 'Player2', points: 1100 },
+  { name: 'Player3', points: 1000 },
+  { name: 'Player4', points: 900 },
+  { name: 'Player1', points: 1200 },
+  { name: 'Player2', points: 1100 },
+  { name: 'Player3', points: 1000 },
+  { name: 'Player4', points: 900 },
 ];
 
 let gameWindow;
@@ -63,7 +107,7 @@ window.addEventListener('beforeunload', () => {
   onWindowBeforeUnload();
 });
 
-// populateLeaderboard(users);
+ populateLeaderboard(users);
 
 openConnectModalBtn.addEventListener('click', () => appkit.open())
 manageWalletBtn.addEventListener('click', () => appkit.open())
@@ -78,7 +122,7 @@ createApp(App).mount('#app')
 function onDocumentLoaded(event){
   setGameRunningState(false);
 
- // leaderboard.classList.add('hidden');
+  closeLeaderboard();
 }
 
 function onWindowLoaded(){

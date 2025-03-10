@@ -239,35 +239,49 @@ button:focus-visible {
 
 
 .panel {
+  position: fixed; /* Ensure the panel is fixed within the viewport */
+  top: 0;
+  left: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  display: flex;
   justify-content: center;
-  background: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
-  text-align: center;
+  align-items: center;
+  background: #151515; /* Semi-transparent background */
+  z-index: 1000; /* Ensure it appears on top */
 }
 
 .leaderboard {
-  display: block; /* Initially hidden */
-  position: fixed; /* Fixed positioning */
-  top: 0;
-  left: 0;
-  width: 60%; /* Full width */
-  height: 60%; /* Full height */
-  background: rgb(85, 255, 85, .8);
-  z-index: 1000; /* Ensure it appears on top */
+  width: 80%; /* Adjust width as needed */
+  max-width: 600px; /* Maximum width */
+  height: 80%; /* Adjust height as needed */
+  max-height: 600px; /* Maximum height */
+  background: black; /* Background color for leaderboard content */
   color: white;
   padding: 20px;
-  box-sizing:border-box;
-
-  
+  /* box-sizing: border-box; */
+  display: flex; /* Use flexbox for centering content */
+  flex-direction: column; /* Stack content vertically */
+  overflow: auto; /* Enable scrolling */
+  border-radius: -.5em; /* Optional rounded corners */
+  border: 1px solid #807b48; 
 }
 
 .leaderboard h2 {
   text-align: center;
+  text-transform: uppercase;
+  color: black;
+  background-color: #807b48;
+  width: 120%;
+  height: 20%;
+  margin-top: -.9em;
 }
+
 
 .leaderboard .button-sqr {
   position: absolute;
-  top: 20px;
-  right: 20px;
+  top: 2em;
+  right: 2em;
   background: none;
   border: none;
   color: white;
@@ -277,13 +291,15 @@ button:focus-visible {
 
 .leaderboard ul {
   list-style-type: none;
-  padding: 0;
+  padding-left: 10em;
+  padding-right: 10em;
+  overflow:scroll;
 }
 
 .leaderboard li {
-  margin: 0 0;
   color: #555;
   text-align: center;
+  width: 20em;
 }
 
 .close-button {
