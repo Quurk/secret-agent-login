@@ -149,6 +149,10 @@ async function fetchLeaderboard() {
   try {
       let response = await fetch(url, {
           method: 'GET', // or 'POST' if you're making a POST request
+          mode: 'no-cors',
+          headers: {
+          'Content-Type': 'application/json'
+          }
       });
       
       if (!response.ok) {
