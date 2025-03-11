@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Secret Agent</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;700&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -34,7 +34,7 @@
         <div>
           <p data-connected-only>Click LAUNCH GAME to start playing</p>
           <button id="btn-manageWallet" data-connected-only>Manage Wallet</button>
-          <button id="toggleBtn-leaderboard" onclick="openLeaderboard()" data-connected-only>Leaderboard</button>
+          <button id="btn-openLeaderboard" data-connected-only>Leaderboard</button>
           <button id="btn-launchGame" class="button1" data-connected-only>Launch Game</button>
         </div>
 
@@ -42,14 +42,6 @@
           <p class="p2">Logged Into:</p>
           <p id="wallet-address" class="p2">Not Connected</p>
         </div>
-
-        <script>
-          function openLeaderboard(){
-            fetchLeaderboard();
-            document.getElementById('leaderboard').style.display = '';
-            document.getElementById('panel-loggedIn').style.display = 'none';
-          }
-        </script>
 
       </div>
     </div>
@@ -70,15 +62,8 @@
           <span class="points">Points</span>
         </li>
         </ul>
-  
-        <script>
-          function closeLeaderboard() {
-            document.getElementById('leaderboard').style.display = 'none';
-            document.getElementById('panel-loggedIn').style.display = '';
-          }
-        </script>
       <div><span class="self-ranking" id="self-ranking">Self</span></div>
-      <div><button class="btn-close" onclick="closeLeaderboard()">Close</button></div>
+      <div><button class="btn-close" id="btn-closeLeaderboard">Close</button></div>
     </div>
  
 </body>

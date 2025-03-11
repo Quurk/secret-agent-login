@@ -16,8 +16,6 @@ const launhGameBtn = document.getElementById('btn-launchGame')
 const openConnectModalBtn = document.getElementById('btn-connect')
 const walletAddressText = document.getElementById('wallet-address');
 const manageWalletBtn = document.getElementById('btn-manageWallet');
-const leaderboardBtn = document.getElementById('toggleBtn-leaderboard');
-const leaderboard = document.getElementById('leaderboard');
 
 const networks = [mainnet, arbitrum]
 
@@ -110,6 +108,8 @@ window.addEventListener('beforeunload', () => {
 
 populateLeaderboard(users);
 
+document.getElementById('btn-openLeaderboard').addEventListener('click', openLeaderboard);
+document.getElementById('btn-closeLeaderboard').addEventListener('click', closeLeaderboard);
 openConnectModalBtn.addEventListener('click', () => appkit.open())
 manageWalletBtn.addEventListener('click', () => appkit.open())
 launhGameBtn.addEventListener('click', ()=> launchGame(getWalletAddress()));
@@ -121,6 +121,27 @@ createApp(App).mount('#app')
 
 
 
+
+
+
+function onDocumentLoaded(event){
+  setGameRunningState(false);
+
+
+
+
+  closeLeaderboard();
+ // fetchLeaderboard();
+}
+
+function onWindowLoaded(){
+  setTimeout(type, 900);
+}
+
+function onWindowBeforeUnload(){
+  setGameRunningState('false');
+  gameWindow.close();
+}
 
 async function fetchLeaderboard() {
   const url = 'https://4fi807plvh.execute-api.ap-southeast-1.amazonaws.com/default/SecretAgent_UserScoring?limit=100&start_after=User123';
@@ -141,22 +162,17 @@ async function fetchLeaderboard() {
   }
 }
 
-
-function onDocumentLoaded(event){
-  setGameRunningState(false);
-
-  closeLeaderboard();
+function openLeaderboard(){
   fetchLeaderboard();
+  document.getElementById('leaderboard').style.display = '';
+  document.getElementById('panel-loggedIn').style.display = 'none';
 }
 
-function onWindowLoaded(){
-  setTimeout(type, 900);
+function closeLeaderboard() {
+  document.getElementById('leaderboard').style.display = 'none';
+  document.getElementById('panel-loggedIn').style.display = '';
 }
 
-function onWindowBeforeUnload(){
-  setGameRunningState('false');
-  gameWindow.close();
-}
 
 
 function onAppkitStateChanged(newState){
