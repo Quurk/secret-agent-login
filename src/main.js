@@ -109,7 +109,7 @@ window.addEventListener('beforeunload', () => {
 populateLeaderboard(users);
 
 document.getElementById('btn-openLeaderboard').addEventListener('click', openLeaderboard);
-document.getElementById('btn-closeLeaderboard').addEventListener('click', closeLeaderboard);
+ document.getElementById('btn-closeLeaderboard').addEventListener('click', closeLeaderboard);
 openConnectModalBtn.addEventListener('click', () => appkit.open())
 manageWalletBtn.addEventListener('click', () => appkit.open())
 launhGameBtn.addEventListener('click', ()=> launchGame(getWalletAddress()));
@@ -161,7 +161,7 @@ async function fetchLeaderboard() {
 }
 
 function openLeaderboard(){
-  //fetchLeaderboard();
+  fetchLeaderboard();
   document.getElementById('leaderboard').style.display = '';
   document.getElementById('panel-loggedIn').style.display = 'none';
 }
