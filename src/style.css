@@ -182,14 +182,6 @@ button:focus-visible {
   outline: 4px auto #807b48;
 }
 
-.button-sqr {
-  width: 1.5em;
-  height: 1.5em;
-  font-size: 2em;
-  padding: 0em 0em;
-  border-radius: .2em;
-
-}
 
 .title1{
   font-weight: 380;
@@ -372,9 +364,28 @@ button:focus-visible {
   bottom: 2em;
 }
 
+.btn-sqr{
+  width: 1em;
+  height: 1em;
+  background-color: #aaa572;
+  color:#151515;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+  border-radius: .1em;
+}
+
+.horizontalLayoutGrp {
+  width: 300px;
+  background-color: red;
+  display: flex;
+}
+
+
 #self-ranking {
   position: fixed; /* Fix the position */
-  bottom: 10.3em;
+  bottom: 7.8em;
   background-color: #aaa572;
   color: #151515;
   padding: 10px;

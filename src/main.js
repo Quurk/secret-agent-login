@@ -126,12 +126,7 @@ createApp(App).mount('#app')
 
 function onDocumentLoaded(event){
   setGameRunningState(false);
-
-
-
-
   closeLeaderboard();
- // fetchLeaderboard();
 }
 
 function onWindowLoaded(){
@@ -156,6 +151,9 @@ async function fetchLeaderboard() {
       }
       let data = await response.json();
       console.log(data);
+
+      //populateLeaderboard(data);
+
       // Process the leaderboard data here
   } catch (error) {
       console.error('Error fetching leaderboard:', error);
@@ -163,7 +161,7 @@ async function fetchLeaderboard() {
 }
 
 function openLeaderboard(){
-  fetchLeaderboard();
+  //fetchLeaderboard();
   document.getElementById('leaderboard').style.display = '';
   document.getElementById('panel-loggedIn').style.display = 'none';
 }
