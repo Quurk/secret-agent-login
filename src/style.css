@@ -86,6 +86,11 @@ h1 {
   color: #807b48;
 }
 
+h2{
+  text-transform: uppercase;
+  font-size: 1.8em;
+}
+
 button {
   border-radius: .4em;
   border: 1px solid transparent;
@@ -113,6 +118,7 @@ button:focus,
 button:focus-visible {
   outline: 4px auto #cbc693;
 }
+
 
 @keyframes fadeIn {
   from { opacity: 0; }
@@ -310,11 +316,11 @@ button:focus-visible {
   max-height: 60%;
   overflow: auto;
 
-
   background-color: rgba(0, 0, 0, .6);
-  border-radius: 1em;
-  box-shadow: 0 4em 8em rgba(0, 0, 0, 1);
-
+  border-radius: .2em;
+  box-shadow: 0 4em 8em rgba(0, 0, 0, .8);
+  border-width: 1em;
+  animation: fadeIn .1s ease-in forwards;
 }
 
 .leaderboard .header{
@@ -336,6 +342,7 @@ button:focus-visible {
   border-bottom: 1px solid #444;
   margin-bottom: 1em; 
   list-style-type: decimal-leading-zero;
+
 }
 
 .leaderboard span{
@@ -365,10 +372,9 @@ button:focus-visible {
   bottom: 2em;
 }
 
-
 #self-ranking {
   position: fixed; /* Fix the position */
-  bottom: 10em;
+  bottom: 10.3em;
   background-color: #aaa572;
   color: #151515;
   padding: 10px;

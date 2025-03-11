@@ -10,6 +10,7 @@ import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 // In local testing, gets from ".env" file. In production, gets from Github Secrets and Environment Variables in the repo.
 const projectId = import.meta.env.VITE_REOWN_PROJECT_ID;
 const url = import.meta.env.VITE_GAME_URL;
+const url_leaderboard = import.meta.env.VITE_LEADERBOARD_URL;
 
 const launhGameBtn = document.getElementById('btn-launchGame')
 const openConnectModalBtn = document.getElementById('btn-connect')
@@ -107,22 +108,45 @@ window.addEventListener('beforeunload', () => {
   onWindowBeforeUnload();
 });
 
- populateLeaderboard(users);
+populateLeaderboard(users);
 
 openConnectModalBtn.addEventListener('click', () => appkit.open())
 manageWalletBtn.addEventListener('click', () => appkit.open())
 launhGameBtn.addEventListener('click', ()=> launchGame(getWalletAddress()));
 appkit.subscribeState( (newState) => onAppkitStateChanged());
 
-//addToggle('toggleBtn-leaderboard', 'leaderboard')
 
 createApp(App).mount('#app')
+
+
+
+
+
+async function fetchLeaderboard() {
+  const url = 'https://4fi807plvh.execute-api.ap-southeast-1.amazonaws.com/default/SecretAgent_UserScoring?limit=100&start_after=User123';
+
+  try {
+      let response = await fetch(url, {
+          method: 'GET', // or 'POST' if you're making a POST request
+      });
+      
+      if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      let data = await response.json();
+      console.log(data);
+      // Process the leaderboard data here
+  } catch (error) {
+      console.error('Error fetching leaderboard:', error);
+  }
+}
 
 
 function onDocumentLoaded(event){
   setGameRunningState(false);
 
- //closeLeaderboard();
+  closeLeaderboard();
+  fetchLeaderboard();
 }
 
 function onWindowLoaded(){
@@ -236,8 +260,15 @@ function populateLeaderboard(table) {
 
 
   table.forEach((user, index) => {
-    addScore(index+1, user.name, "malaysia", user.points);
+    const rank = index+1;
+    addScore(rank, user.name, "malaysia", user.points);
+
+  // Update display for self ranking
+    if (user.name === 'Player1') {
+      updateRanking(rank);
+    }
   });
+
 
 
   function addScore(rank, username, country, score) {
@@ -280,6 +311,3 @@ function updateRanking(ranking) {
   const rankingElement = document.getElementById('self-ranking');
   rankingElement.textContent = `Your Ranking: #${ranking}`;
 }
-
-// Example usage: Update the user's ranking
-updateRanking(1); // Set the initial ranking
