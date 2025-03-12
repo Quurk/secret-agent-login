@@ -44,7 +44,7 @@ jobs:
 
   build-production:
     runs-on: ubuntu-latest
-    environment: main
+    environment: production
 
     steps:
       - name: Checkout code
