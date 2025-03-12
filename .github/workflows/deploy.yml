@@ -35,7 +35,7 @@ jobs:
         run: ls -la  # List files to verify build output
 
       - name: Move build to development directory
-        run: mv build development
+        run: mv dist development
           
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
