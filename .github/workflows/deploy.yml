@@ -32,12 +32,6 @@ jobs:
         env:
           VITE_REOWN_PROJECT_ID: ${{ secrets.VITE_REOWN_PROJECT_ID }}
           VITE_GAME_URL: ${{ vars.VITE_GAME_URL }}
-
-      # - name: Verify development build
-      #   run: ls -la  # List files to verify build output
-
-      # - name: Move build to development directory
-      #   run: mv dist development
           
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
@@ -45,7 +39,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
           destination_dir: development  # Subdirecotry in gh-pages
-          cname: agent.pastopia.io
+          # cname: agent.pastopia.io
         
 
 
