@@ -31,6 +31,9 @@ jobs:
           VITE_REOWN_PROJECT_ID: ${{ secrets.VITE_REOWN_PROJECT_ID }}
           VITE_GAME_URL: ${{ vars.VITE_GAME_URL }}
 
+      - name: Verify development build
+        run: ls -la  # List files to verify build output
+
       - name: Move build to development directory
         run: mv build development
           
