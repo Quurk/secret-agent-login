@@ -11,7 +11,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: production
+    environment: production # Defined in https://github.com/Quurk/secret-agent-login/settings/environments
 
     steps:
       - name: Checkout code
