@@ -20,57 +20,24 @@ const manageWalletBtn = document.getElementById('btn-manageWallet');
 const networks = [mainnet, arbitrum]
 
 const users = [
-  { name: 'Player1', points: 1200 },
-  { name: 'aerganegjkbarejgbahjregbhjerabghrebghabergbahtgbahterbgh', points: 110000000000000000000000000000000 },
-  { name: 'Player3', points: 1000 },
-  { name: 'Player4', points: 900 },
-  { name: 'Player1', points: 1200 },
-  { name: 'Player2', points: 1100 },
-  { name: 'Player3', points: 1000 },
-  { name: 'Player4', points: 900 },
-  { name: 'Player1', points: 1200 },
-  { name: 'Player2', points: 1100 },
-  { name: 'Player3', points: 1000 },
-  { name: 'Player4', points: 900 },
-  { name: 'Player1', points: 1200 },
-  { name: 'Player2', points: 1100 },
-  { name: 'Player3', points: 1000 },
-  { name: 'Player4', points: 900 },
-  { name: 'Player1', points: 1200 },
-  { name: 'Player2', points: 1100 },
-  { name: 'Player3', points: 1000 },
-  { name: 'Player4', points: 900 },
-  { name: 'Player1', points: 1200 },
-  // { name: 'Player2', points: 1100 },
-  // { name: 'Player3', points: 1000 },
-  // { name: 'Player4', points: 900 },
-  // { name: 'Player1', points: 1200 },
-  // { name: 'Player2', points: 1100 },
-  // { name: 'Player3', points: 1000 },
-  // { name: 'Player4', points: 900 },
-  // { name: 'Player1', points: 1200 },
-  // { name: 'Player2', points: 1100 },
-  // { name: 'Player3', points: 1000 },
-  // { name: 'Player4', points: 900 },
-  // { name: 'Player1', points: 1200 },
-  // { name: 'Player2', points: 1100 },
-  // { name: 'Player3', points: 1000 },
-  // { name: 'Player4', points: 900 },
-  // { name: 'Player1', points: 1200 },
-  // { name: 'Player2', points: 1100 },
-  // { name: 'Player3', points: 1000 },
-  // { name: 'Player4', points: 900 },
-  // { name: 'Player1', points: 1200 },
-  // { name: 'Player2', points: 1100 },
-  // { name: 'Player3', points: 1000 },
-  // { name: 'Player4', points: 900 },
-  // { name: 'Player1', points: 1200 },
-  // { name: 'Player2', points: 1100 },
-  // { name: 'Player3', points: 1000 },
-  // { name: 'Player4', points: 900 },
+  {uid: '0x01', KOLCodes: ['KOLCode_A', 'KOLCode_B'], totalPoints: 35},
+  {uid: '0x02', KOLCodes: ['KOLCode_A'], totalPoints: 345},
+  {uid: '0x03', KOLCodes: ['KOLCode_A', 'KOLCode_B', "KOLCode_C"], totalPoints: 15},
+  {uid: '0x01', KOLCodes: ['KOLCode_A', 'KOLCode_B'], totalPoints: 35},
+  {uid: '0x02', KOLCodes: ['KOLCode_A'], totalPoints: 345},
+  {uid: '0x03', KOLCodes: ['KOLCode_A', 'KOLCode_B', "KOLCode_C"], totalPoints: 15},
+  {uid: '0x01', KOLCodes: ['KOLCode_A', 'KOLCode_B'], totalPoints: 35},
+  {uid: '0x02', KOLCodes: ['KOLCode_A'], totalPoints: 345},
+  {uid: '0x03', KOLCodes: ['KOLCode_A', 'KOLCode_B', "KOLCode_C"], totalPoints: 15},
+  {uid: '0x01', KOLCodes: ['KOLCode_A', 'KOLCode_B'], totalPoints: 35},
+  {uid: '0x02', KOLCodes: ['KOLCode_A'], totalPoints: 345},
+  {uid: '0x03', KOLCodes: ['KOLCode_A', 'KOLCode_B', "KOLCode_C"], totalPoints: 15},
 ];
 
 let gameWindow;
+const itemsPerPage = 5;
+let currentPage = 1;
+let totalPages = -1;
 
 const wagmiAdapter = new WagmiAdapter({
   projectId,
@@ -106,10 +73,15 @@ window.addEventListener('beforeunload', () => {
   onWindowBeforeUnload();
 });
 
-populateLeaderboard(users);
 
+totalPages = Math.ceil(users.length / itemsPerPage),
+renderLeaderboardPage(users, currentPage);
+refreshPaginationButtons();
+
+document.getElementById('btn-nextPage').addEventListener('click', nextPage);
+document.getElementById('btn-previousPage').addEventListener('click', previousPage);
 document.getElementById('btn-openLeaderboard').addEventListener('click', openLeaderboard);
- document.getElementById('btn-closeLeaderboard').addEventListener('click', closeLeaderboard);
+document.getElementById('btn-closeLeaderboard').addEventListener('click', closeLeaderboard);
 openConnectModalBtn.addEventListener('click', () => appkit.open())
 manageWalletBtn.addEventListener('click', () => appkit.open())
 launhGameBtn.addEventListener('click', ()=> launchGame(getWalletAddress()));
@@ -138,37 +110,16 @@ function onWindowBeforeUnload(){
   gameWindow.close();
 }
 
-async function fetchLeaderboard() {
-  const url = 'https://4fi807plvh.execute-api.ap-southeast-1.amazonaws.com/default/SecretAgent_UserScoring?limit=100&start_after=User123';
-
-  try {
-      let response = await fetch(url, {
-          method: 'GET', // or 'POST' if you're making a POST request
-      });
-      
-      if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-      let data = await response.json();
-      console.log(data);
-
-      //populateLeaderboard(data);
-
-      // Process the leaderboard data here
-  } catch (error) {
-      console.error('Error fetching leaderboard:', error);
-  }
-}
 
 function openLeaderboard(){
-  fetchLeaderboard();
+  //fetchLeaderboard();
   document.getElementById('leaderboard').style.display = '';
-  document.getElementById('panel-loggedIn').style.display = 'none';
+  // document.getElementById('panel-loggedIn').style.display = 'none';
 }
 
 function closeLeaderboard() {
   document.getElementById('leaderboard').style.display = 'none';
-  document.getElementById('panel-loggedIn').style.display = '';
+  // document.getElementById('panel-loggedIn').style.display = '';
 }
 
 
@@ -259,69 +210,180 @@ function type() {
     setTimeout(type, 135); // Speed for each letter to appear (ms)
   }
 }
-function populateLeaderboard(table) {
+
+
+
+async function fetchLeaderboard(all = false) {
+  const itemsPerPage = 1;
+  if(all){
+    const url = `https://4fi807plvh.execute-api.ap-southeast-1.amazonaws.com/default/SecretAgent_UserScoring`;
+    try {
+      let response = await fetch(url, {
+          method: 'GET', // or 'POST' if you're making a POST request
+      });
+      
+      if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      let data = await response.json();
+      console.log(data);
+
+      totalPages = Math.ceil(data.length / itemsPerPage),
+      currentPage = 1;
+      renderLeaderboardPage(data, currentPage);
+
+      // Process the leaderboard data here
+    } catch (error) {
+        console.error('Error fetching leaderboard:', error);
+    }
+  }
+  else{
+    const url = `https://4fi807plvh.execute-api.ap-southeast-1.amazonaws.com/default/SecretAgent_UserScoring?limit=${itemsPerPage}`;
+    try {
+        let response = await fetch(url, {
+            method: 'GET', // or 'POST' if you're making a POST request
+        });
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        let data = await response.json();
+        console.log(data);
+  
+        //renderLeaderboard(data);
+  
+        // Process the leaderboard data here
+    } catch (error) {
+        console.error('Error fetching leaderboard:', error);
+    }
+  }
+
+}
+
+
+function nextPage(){
+  currentPage += 1;
+  renderLeaderboardPage(users, currentPage);
+}
+
+function previousPage(){
+  currentPage -= 1;
+  renderLeaderboardPage(users, currentPage);
+}
+
+function refreshPaginationButtons(){
+  if(currentPage == 1)
+    document.getElementById("btn-previousPage").style.display = 'none';
+  else 
+    document.getElementById("btn-previousPage").style.display = '';
+
+  if(currentPage == totalPages)
+    document.getElementById("btn-nextPage").style.display = 'none';
+  else 
+    document.getElementById("btn-nextPage").style.display = '';
+}
+
+function renderLeaderboardPage(data, pageNumber){
+  const startIndex = (pageNumber - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const pageItems = data.slice(startIndex, endIndex);
+  renderLeaderboard(pageItems);
+  refreshPaginationButtons();
+}
+
+function renderLeaderboard(table) {
   const leaderboardList = document.getElementById('leaderboard-list');
   const header = leaderboardList.querySelector('.header');
 
 
-  while (leaderboardList.firstChild) {
-    if (leaderboardList.firstChild !== header) {
-      leaderboardList.removeChild(leaderboardList.firstChild);
+  while (leaderboardList.childNodes.length > 2) {
+    if (leaderboardList.lastChild !== leaderboardList.firstChild) {
+      leaderboardList.removeChild(leaderboardList.lastChild);
+      console.log('clear');
     } else {
-        break;
+      break;
     }
   }
 
 
   table.forEach((user, index) => {
     const rank = index+1;
-    addScore(rank, user.name, "malaysia", user.points);
+  //  addScore(rank, user.name, "malaysia", user.points);
+  addScore(user.uid, user.KOLCodes, user.totalPoints);
 
   // Update display for self ranking
-    if (user.name === 'Player1') {
-      updateRanking(rank);
+    if (user.uid === '0x01') {
+      updateRanking(user.totalPoints);
     }
   });
 
+function addScore(uid, KOLCodes, totalPoints){
+  const scoreList = document.getElementById('leaderboard-list');
+  const listItem = document.createElement('li');
+  
+  const uidSpan = document.createElement('span');
+  uidSpan.classList.add('span');
+  uidSpan.textContent = uid;
+  listItem.append(uidSpan);
 
+  const KOLCodesSpan = document.createElement('span');
+  KOLCodesSpan.classList.add('span');
 
-  function addScore(rank, username, country, score) {
-    const scoreList = document.getElementById('leaderboard-list');
-    
-    // Create a new list item
-    const listItem = document.createElement('li');
+  let codes = '';
+  KOLCodes.forEach((code, index) =>{
+    if(index == 0)
+      codes+= `${code}`;
+    else
+      codes += `, ${code}`;
+  });
+  KOLCodesSpan.textContent = codes;
+  listItem.append(KOLCodesSpan);
 
-    // Create and append the username span
-    const rankSpan = document.createElement('span');
-    rankSpan.classList.add('span');
-    rankSpan.textContent = rank;
-    listItem.appendChild(rankSpan);
+  const totalPointsSpan = document.createElement('span');
+  totalPointsSpan.classList.add('span');
+  totalPointsSpan.textContent = totalPoints;
+  listItem.append(totalPointsSpan);
 
-    // Create and append the username span
-    const usernameSpan = document.createElement('span');
-    usernameSpan.classList.add('username');
-    usernameSpan.textContent = username;
-    listItem.appendChild(usernameSpan);
-    
-    // Create and append the country span
-    const countrySpan = document.createElement('span');
-    countrySpan.classList.add('country');
-    countrySpan.textContent = country;
-    listItem.appendChild(countrySpan);
-    
-    // Create and append the score span
-    const scoreSpan = document.createElement('span');
-    scoreSpan.classList.add('points');
-    scoreSpan.textContent = score;
-    listItem.appendChild(scoreSpan);
-
-    // Append the new list item to the scoreboard
-    scoreList.appendChild(listItem);
+  scoreList.appendChild(listItem);
 }
+
+//   function addScore(rank, username, country, points) {
+//     const scoreList = document.getElementById('leaderboard-list');
+    
+//     // Create a new list item
+//     const listItem = document.createElement('li');
+
+//     // Create and append the username span
+//     const rankSpan = document.createElement('span');
+//     rankSpan.classList.add('span');
+//     rankSpan.textContent = rank;
+//     listItem.appendChild(rankSpan);
+
+//     // Create and append the username span
+//     const usernameSpan = document.createElement('span');
+//     usernameSpan.classList.add('username');
+//     usernameSpan.textContent = username;
+//     listItem.appendChild(usernameSpan);
+    
+//     // Create and append the country span
+//     const countrySpan = document.createElement('span');
+//     countrySpan.classList.add('country');
+//     countrySpan.textContent = country;
+//     listItem.appendChild(countrySpan);
+    
+//     // Create and append the score span
+//     const scoreSpan = document.createElement('span');
+//     scoreSpan.classList.add('points');
+//     scoreSpan.textContent = score;
+//     listItem.appendChild(scoreSpan);
+
+//     // Append the new list item to the scoreboard
+//     scoreList.appendChild(listItem);
+// }
 
 }
 
 function updateRanking(ranking) {
   const rankingElement = document.getElementById('self-ranking');
-  rankingElement.textContent = `Your Ranking: #${ranking}`;
+  rankingElement.textContent = `Your Total Points: ${ranking}`;
 }

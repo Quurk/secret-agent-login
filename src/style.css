@@ -11,7 +11,8 @@
   }
 
   .leaderboard li{
-    grid-template-columns: 3em 15em 8em 8em;
+    /* grid-template-columns: 3em 15em 8em 8em; */
+    grid-template-columns: 11em 15em 8em;
   }
 }
 
@@ -27,7 +28,8 @@
     max-width: 600px
   }
   .leaderboard li{
-    grid-template-columns: 1em 7em 3em 6em;
+    /* grid-template-columns: 1em 7em 3em 6em; */
+    grid-template-columns: 7em 8em 3em;
   }
 }
 
@@ -304,18 +306,20 @@ h2{
 
 }
 
-
 .leaderboard {
   position: absolute;
+  min-height: 65%;
   max-height: 65%;
   overflow: auto;
 
-  background-color: rgba(0, 1, 0, .6);
-  border-radius: .1em;
-  box-shadow: 0 5em 50em rgba(0, 0, 0, .8);
-  border-width: 5em; 
+  background-color: rgba(0, 0, 0, .95); 
+  padding: 2em;
+  border-radius: 1em;
   animation: fadeIn .1s ease-in backwards;
+  box-shadow: 0 1em 1em rgba(0, 0, 0, 0.6); /* Add subtle shadow for softened edges */
 }
+
+
 
 .leaderboard .header{
   font-weight: bold;
@@ -366,6 +370,7 @@ h2{
   bottom: 0;
 }
 
+
 .button-square{
   background-color: #aaa572;
   color:#151515;
@@ -384,8 +389,8 @@ h2{
   width: 100%;
   flex-direction: row;
   justify-content: center;
+  /* background-color: rgba(0, 0, 0, 0); */
 }
-
 
 #self-ranking {
   position: sticky;

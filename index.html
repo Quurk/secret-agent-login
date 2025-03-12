@@ -10,7 +10,6 @@
 <body>
   <script type="module" src="./src/main.js" defer></script>
 
-  
   <div>    
     <div>
       <div data-disconnected-only style="margin-top: -1em;">    
@@ -18,11 +17,9 @@
         <div class="typewriter">
             <div class="container"><span id="typewriter" class='title2' >Secret Agent</span></div>
 
-
-          <!-- <span class="title2" style="opacity: 0; animation: fadeIn 1.75s ease-in-out forwards;">Secret Agent</span> -->
         </div>
       </div>
-      <div data-connected-only style="margin-top: 1rem;" id="panel-loggedIn">    
+      <div  data-connected-only style="margin-top: 1rem;">    
         <p class="title1">Welcome to</p>
         <div class="container">
           <span class="title2">Secret Agent</span>
@@ -50,40 +47,27 @@
   </div>
   </div>
 
-
   <div class="leaderboard" id="leaderboard">
     <div class="container">
-      <div class="panel" >
+      <div class="panel">
         <h2>Leaderboard</h2>
-        <!-- <button class="button-sqr" onclick="closeLeaderboard()">×</button> -->
-  
         <ul id="leaderboard-list">
           <li class="header">
-          <span class="rank">Rank</span>
-          <span class="username">Username</span>
-          <span class="country">Country</span>
-          <span class="points">Points</span>
-
-        </li>
+            <span class="rank">UID</span>
+            <span class="username">KOL Codes</span>
+            <span class="country">Total Points</span>
+          </li>
         </ul>
 
         <span class="self-ranking" id="self-ranking">Self</span>
-      
       </div>
-
     </div>
 
     <div class="horizontalLayoutGrp">
-      <button class="button-square">&lt;</button>
-      <button class="button-square"> &gt; </button>
+      <button id="btn-previousPage" class="button-square">&lt;</button>
+      <button id="btn-nextPage" class="button-square">&gt;</button>
     </div>
     <button class="button2" id="btn-closeLeaderboard">Close</button>
   </div>
-
-
-
-    
 </body>
-
 </html>
-
