@@ -31,14 +31,6 @@ jobs:
           VITE_REOWN_PROJECT_ID: ${{ secrets.VITE_REOWN_PROJECT_ID }}
           VITE_GAME_URL: ${{ vars.VITE_GAME_URL }}
 
-      - name: Create example text file
-        run: echo "This is an example text file." > example.txt  # Create a text file
-
-      - name: Move example text file to development directory
-        run: |
-          mkdir -p development  # Create the directory if it doesn't exist
-          mv example.txt development/  # Move the text file to the directory
-
       # - name: Verify development build
       #   run: ls -la  # List files to verify build output
 
@@ -50,7 +42,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-          destination_dir: gh-pages
+          destination_dir: development  # Subdirecotry in gh-pages
           cname: agent.pastopia.io
         
 
