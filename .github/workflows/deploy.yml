@@ -1,5 +1,7 @@
 
-#~25-40secs per build + deploy
+# ~25-40secs per build + deploy
+# It is possible to experience down time during build - error 404 page.
+# To include in .gitignore
 name: Deploy to GitHub Pages
 
 on:
