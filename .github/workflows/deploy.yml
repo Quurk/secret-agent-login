@@ -10,7 +10,9 @@ permissions:
   contents: write 
 
 jobs:
-  build-production:
+  # Production step is needed first because of the way peaceiris/actions-gh-pages@v3 works and the way the pages are organized in the gh-pages branch
+  # Building production after development will cause development's artifacts to get overwritten since they are not build artifacts of production
+  build-production: 
       runs-on: ubuntu-latest
       environment: production
 
