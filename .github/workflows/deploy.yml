@@ -78,7 +78,7 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-          destination_dir: development  # Subdirectory in gh-pages branch, url will be "agent.pastopia.io/development/"
+          destination_dir: brownchickenbrowncow  # Subdirectory in gh-pages branch, url will be "agent.pastopia.io/brownchickenbrowncow/"
           cname: agent.pastopia.io
 
   
