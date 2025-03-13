@@ -310,9 +310,10 @@ h2{
 .leaderboard {
   margin-top: -5em;
   position: absolute;
-  min-height: 65%;
-  max-height: 65%;
+
   animation: fadeIn .2s ease-in forwards;
+  min-height: 70%;
+  max-height: 70%;
 }
 
 
@@ -342,6 +343,8 @@ h2{
   margin-bottom: 1em; 
   list-style-type: decimal-leading-zero;
   animation: fadeIn .15s ease-in forwards;
+
+
   
 }
 
@@ -377,8 +380,8 @@ h2{
   position: absolute;
   width: 100vw; /* Full width of the viewport */
   height: 100vh; /* Full height of the viewport */
-  background-color: rgba(0, 0, 0, 0.85); /* Red background color */
-  z-index:0;
+  background-color: rgba(0, 0, 0, 0.9); /* Red background color */
+
 }
 
 .button-square{
@@ -403,9 +406,8 @@ h2{
 }
 
 .container2{
-  margin: 1.5em;
-  position: fixed;
-  bottom:0;
+  margin-top: 0em;
+  margin-bottom: -5em;
 }
 
 #self-ranking {

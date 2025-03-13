@@ -200,23 +200,6 @@ function openLeaderboard_kol(){
   openLeaderboard();
 }
 
-// function openLeaderboard_kol(){
-//   //fetchLeaderboard();
-//   currentPage = 1;
-//   totalPages = Math.ceil(kolLeaderboard.length / itemsPerPage);
-//   renderKOLLeaderboardPage(kolLeaderboard, currentPage);
-//   refreshPaginationButtons_kol();
-//   console.log("open");
-
-//   document.getElementById('kol-leaderboard').style.display = '';
-//   document.getElementById('kol-leaderboard-bg').style.display = '';
-// }
-
-// function closeLeaderboard_kol() {
-//   document.getElementById('kol-leaderboard').style.display = 'none';
-//   document.getElementById('kol-leaderboard-bg').style.display = 'none';
-// }
-
 
 function onAppkitStateChanged(newState){
   const isConnected = appkit.getIsConnectedState();
@@ -328,88 +311,7 @@ async function fetchKOLLeaderboard(){
   }
 }
 
-async function getRequest(url) {
-  try {
-    let response = await fetch(url, {
-      method: 'GET'
-    });
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-    let data = await response.json();
-    console.log(data);
 
-    return {
-      success: true,
-      data: data
-    };
-  } catch (error) {
-    console.error('Error fetching leaderboard:', error);
-
-    return {
-      success: false,
-      error: error.message
-    };
-  }
-}
-
-
-// async function fetchLeaderboard(all = false) {
-//   const itemsPerPage = 1;
-//   if(all){
-//     const url = `https://4fi807plvh.execute-api.ap-southeast-1.amazonaws.com/default/SecretAgent_UserScoring`;
-//     try {
-//       let response = await fetch(url, {
-//           method: 'GET', // or 'POST' if you're making a POST request
-//       });
-      
-//       if (!response.ok) {
-//           throw new Error(`HTTP error! Status: ${response.status}`);
-//       }
-//       let data = await response.json();
-//       console.log(data);
-
-//       totalPages = Math.ceil(data.length / itemsPerPage),
-//       currentPage = 1;
-//       renderLeaderboardPage(data, currentPage);
-
-//       // Process the leaderboard data here
-//     } catch (error) {
-//         console.error('Error fetching leaderboard:', error);
-//     }
-//   }
-//   else{
-//     const url = `https://4fi807plvh.execute-api.ap-southeast-1.amazonaws.com/default/SecretAgent_UserScoring?limit=${itemsPerPage}`;
-//     try {
-//         let response = await fetch(url, {
-//             method: 'GET', // or 'POST' if you're making a POST request
-//         });
-        
-//         if (!response.ok) {
-//             throw new Error(`HTTP error! Status: ${response.status}`);
-//         }
-//         let data = await response.json();
-//         console.log(data);
-  
-//         //renderLeaderboard(data);
-  
-//         // Process the leaderboard data here
-//     } catch (error) {
-//         console.error('Error fetching leaderboard:', error);
-//     }
-//   }
-
-// }
-
-// function nextPage_kol(){
-//   currentPage += 1;
-//   renderKOLLeaderboardPage(kolLeaderboard, currentPage);
-// }
-
-// function previousPage_kol(){
-//   currentPage -= 1;
-//   renderKOLLeaderboardPage(kolLeaderboard, currentPage);
-// }
 
 
 function nextPage(){
@@ -442,19 +344,6 @@ function refreshPaginationButtons(){
   else 
     document.getElementById("btn-nextPage").classList.remove('invisible');
 }
-
-// function refreshPaginationButtons_kol(){
-//   if(currentPage == 1)
-//     document.getElementById("btn-previousPage-kol").classList.add('invisible');
-//   else 
-//     document.getElementById("btn-previousPage-kol").classList.remove('invisible');
-
-//   if(currentPage == totalPages)
-//     document.getElementById("btn-nextPage-kol").classList.add('invisible');
-//   else 
-//     document.getElementById("btn-nextPage-kol").classList.remove('invisible');
-// }
-
 
 function processPageItems(data, pageNumber){
   const startIndex = (pageNumber - 1) * itemsPerPage;
@@ -589,4 +478,113 @@ function renderLeaderboard(table) {
 function updateRanking(ranking) {
   const rankingElement = document.getElementById('self-ranking');
   rankingElement.textContent = `Your Total Points: ${ranking}`;
+}
+
+
+// async function fetchLeaderboard(all = false) {
+//   const itemsPerPage = 1;
+//   if(all){
+//     const url = `https://4fi807plvh.execute-api.ap-southeast-1.amazonaws.com/default/SecretAgent_UserScoring`;
+//     try {
+//       let response = await fetch(url, {
+//           method: 'GET', // or 'POST' if you're making a POST request
+//       });
+      
+//       if (!response.ok) {
+//           throw new Error(`HTTP error! Status: ${response.status}`);
+//       }
+//       let data = await response.json();
+//       console.log(data);
+
+//       totalPages = Math.ceil(data.length / itemsPerPage),
+//       currentPage = 1;
+//       renderLeaderboardPage(data, currentPage);
+
+//       // Process the leaderboard data here
+//     } catch (error) {
+//         console.error('Error fetching leaderboard:', error);
+//     }
+//   }
+//   else{
+//     const url = `https://4fi807plvh.execute-api.ap-southeast-1.amazonaws.com/default/SecretAgent_UserScoring?limit=${itemsPerPage}`;
+//     try {
+//         let response = await fetch(url, {
+//             method: 'GET', // or 'POST' if you're making a POST request
+//         });
+        
+//         if (!response.ok) {
+//             throw new Error(`HTTP error! Status: ${response.status}`);
+//         }
+//         let data = await response.json();
+//         console.log(data);
+  
+//         //renderLeaderboard(data);
+  
+//         // Process the leaderboard data here
+//     } catch (error) {
+//         console.error('Error fetching leaderboard:', error);
+//     }
+//   }
+
+// }
+
+
+// async function getRequest(url) {
+//   try {
+//     let response = await fetch(url, {
+//       method: 'GET'
+//     });
+//     if (!response.ok) {
+//       throw new Error(`HTTP error! Status: ${response.status}`);
+//     }
+//     let data = await response.json();
+//     console.log(data);
+
+//     return {
+//       success: true,
+//       data: data
+//     };
+//   } catch (error) {
+//     console.error('Error fetching leaderboard:', error);
+
+//     return {
+//       success: false,
+//       error: error.message
+//     };
+//   }
+// }
+
+
+async function getRequest(url) {
+  try {
+    let response = await fetch(url, {
+      method: 'GET'
+    });
+    console.log(response);
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    
+    let responseData = await response.json();
+
+    
+    // Extract the actual data from the body
+    const body = JSON.parse(responseData.body);
+    const data = JSON.parse(body.body);
+    
+    console.log(data);
+
+    return {
+      success: true,
+      data: data
+    };
+  } catch (error) {
+    console.error('Error fetching leaderboard:', error);
+
+    return {
+      success: false,
+      error: error.message
+    };
+  }
 }
