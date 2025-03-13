@@ -93,9 +93,6 @@ h2{
   font-size: 1.8em;
 }
 
-
-
-
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -108,7 +105,6 @@ h2{
 
 
 :root {
-  /* font-family: system-ui, Avenir, Helvetica, Arial, sans-serif; */
   font-family: 'Figtree';
   line-height: 1.5;
   font-weight: 400;
@@ -143,7 +139,8 @@ h2{
   background-color: #cbc693;
   cursor: pointer;
   transition: border-color 0.25s;
-  margin-bottom: 20px; /* Add spacing between buttons */
+  margin-top: 10px;
+  margin-bottom: 10px; /* Add spacing between buttons */
   color: #151515;
   text-transform: uppercase;
   width: 12em;
@@ -169,7 +166,8 @@ h2{
   background-color: #240e2f;
   cursor: pointer;
   transition: border-color 0.25s;
-  margin-bottom: 20px; 
+  margin-top: 10px;
+  margin-bottom: 10px; 
   color:#cbc693;
   border-color: #aaa572;
   text-transform: uppercase;
@@ -243,6 +241,10 @@ h2{
   display: none;
 }
 
+.invisible{
+  visibility: hidden;
+}
+
 
 .no-cursor{
   border-right: none;
@@ -303,22 +305,15 @@ h2{
 
   color: #aaa572;
   border: 2px solid #aaa572;
-
 }
 
 .leaderboard {
+  margin-top: -5em;
   position: absolute;
   min-height: 65%;
   max-height: 65%;
-  overflow: auto;
-
-  background-color: rgba(0, 0, 0, .95); 
-  padding: 2em;
-  border-radius: 1em;
-  animation: fadeIn .1s ease-in backwards;
-  box-shadow: 0 1em 1em rgba(0, 0, 0, 0.6); /* Add subtle shadow for softened edges */
+  animation: fadeIn .2s ease-in forwards;
 }
-
 
 
 .leaderboard .header{
@@ -328,9 +323,15 @@ h2{
   display: grid;
 }
 
+.leaderboard .container{
+  overflow: auto;
+
+}
+
 .leaderboard ul{
   display: contents;
   list-style-type: none;
+  overflow: scroll;
 }
 
 .leaderboard li{
@@ -340,7 +341,8 @@ h2{
   border-bottom: 1px solid #444;
   margin-bottom: 1em; 
   list-style-type: decimal-leading-zero;
-
+  animation: fadeIn .15s ease-in forwards;
+  
 }
 
 .leaderboard span{
@@ -349,27 +351,35 @@ h2{
   text-overflow: ellipsis; /* Add ellipsis for overflow text */
 }
 
-.leaderboard span.rank {
+/* .leaderboard span.col1 {
   grid-column: 1;
 }
 
-.leaderboard span.username {
+.leaderboard span.col2 {
   grid-column: 2;
 }
 
-.leaderboard span.country {
+.leaderboard span.col3 {
   grid-column: 3;
+} */
+
+.leaderboard-buttons .horizontalLayoutGrp{
+  margin-top: 3em;
 }
 
-.leaderboard span.points {
-  grid-column: 4;
+.leaderboard-buttons .button-square{
+  width: 2em;
+  height: 2em;
+  background-color: #240e2f;
 }
 
-.leaderboard .button2{
-  position: fixed;
-  bottom: 0;
+.background{
+  position: absolute;
+  width: 100vw; /* Full width of the viewport */
+  height: 100vh; /* Full height of the viewport */
+  background-color: rgba(0, 0, 0, 0.85); /* Red background color */
+  z-index:0;
 }
-
 
 .button-square{
   background-color: #aaa572;
@@ -389,7 +399,13 @@ h2{
   width: 100%;
   flex-direction: row;
   justify-content: center;
-  /* background-color: rgba(0, 0, 0, 0); */
+  margin: 1em;
+}
+
+.container2{
+  margin: 1.5em;
+  position: fixed;
+  bottom:0;
 }
 
 #self-ranking {
