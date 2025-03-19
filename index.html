@@ -36,10 +36,27 @@
           <button id="btn-manageWallet"  class="button2" data-connected-only>Manage Wallet</button>
           <button id="btn-launchGame" class="button1" data-connected-only>Launch Game</button>
 
-          <div class="leaderboard-buttons" data-connected-only>
+          <!-- <div class="leaderboard-buttons" data-connected-only> -->
+          <div class="leaderboard-buttons">
             <div class="horizontalLayoutGrp">
-              <button id="btn-openLeaderboard-individual" class="button-square">👤</button>
-              <button id="btn-openLeaderboard-kol" class="button-square">👥</button>
+              <!-- <button id="btn-openLeaderboard-individual" class="button-square">👤</button>
+              <button id="btn-openLeaderboard-kol" class="button-square">👥</button> -->
+
+              <button id="btn-openLeaderboard-individual" class="button-container">
+                <img src="./src/assets/Secret-WalkersArtboard-1.png" alt="Leaderboard Sprite" class="button-image">
+                <span>Leaderboard</span>
+     
+                </button>
+
+                <button id="btn-openLeaderboard-kol" class="button-container">
+                  <img src="./src/assets/Secret-WalkersArtboard-2.png" alt="Community Leaderboard Sprite" class="button-image">
+                  <span>Community Leaderboard</span>
+                  
+                  </button>
+
+
+              </div>
+
             </div>
 
         </div>
@@ -56,9 +73,10 @@
   
   <div class="background" id="leaderboard-bg"></div>
   <div class="leaderboard" id="leaderboard">
-    <div class="container">
+    <div id="leaderboard-container" class="container">
       <div class="panel">
         <h2 id="leaderboard-label">Leaderboard</h2>
+
         <ul id="leaderboard-list">
           <li class="header">
           </li>
@@ -71,12 +89,14 @@
     <div class="container2">
       <div class="horizontalLayoutGrp">
         <button id="btn-previousPage" class="button-square">&lt;</button>
+        <div id="pageNumber" class="pageNumber">999/999</div>
         <button id="btn-nextPage" class="button-square">&gt;</button>
       </div>
   
-      <button class="button2" id="btn-closeLeaderboard">Close</button>
+      <!-- <button class="button2" id="btn-closeLeaderboard">Close</button> -->
+ 
     </div>
-
+    <button class="button-close hidden" id="btn-closeLeaderboard">X</button>
   </div>
 </body>
 </html>

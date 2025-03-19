@@ -26,55 +26,13 @@ const LeaderboardMode = {
   KOL: 'kol',
   NONE: 'none'
 };
-let current_mode =LeaderboardMode.NONE;
 
-const users = [
-  {uid: '0x01', KOLCodes: ['KOLCode_A', 'KOLCode_B'], totalPoints: 35},
-  {uid: '0x02', KOLCodes: ['KOLCode_A'], totalPoints: 345},
-  {uid: '0x03', KOLCodes: ['KOLCode_A', 'KOLCode_B', "KOLCode_C"], totalPoints: 15},
-  {uid: '0x01', KOLCodes: ['KOLCode_A', 'KOLCode_B'], totalPoints: 35},
-  {uid: '0x02', KOLCodes: ['KOLCode_A'], totalPoints: 345},
-  {uid: '0x03', KOLCodes: ['KOLCode_A', 'KOLCode_B', "KOLCode_C"], totalPoints: 15},
-  {uid: '0x01', KOLCodes: ['KOLCode_A', 'KOLCode_B'], totalPoints: 35},
-  {uid: '0x02', KOLCodes: ['KOLCode_A'], totalPoints: 345},
-  {uid: '0x03', KOLCodes: ['KOLCode_A', 'KOLCode_B', "KOLCode_C"], totalPoints: 15},
-  {uid: '0x01', KOLCodes: ['KOLCode_A', 'KOLCode_B'], totalPoints: 35},
-  {uid: '0x02', KOLCodes: ['KOLCode_A'], totalPoints: 345},
-  {uid: '0x03', KOLCodes: ['KOLCode_A', 'KOLCode_B', "KOLCode_C"], totalPoints: 15},
-  {uid: '0x01', KOLCodes: ['KOLCode_A', 'KOLCode_B'], totalPoints: 35},
-  {uid: '0x02', KOLCodes: ['KOLCode_A'], totalPoints: 345},
-  {uid: '0x03', KOLCodes: ['KOLCode_A', 'KOLCode_B', "KOLCode_C"], totalPoints: 15},
-  {uid: '0x01', KOLCodes: ['KOLCode_A', 'KOLCode_B'], totalPoints: 35},
-  {uid: '0x02', KOLCodes: ['KOLCode_A'], totalPoints: 345},
-  {uid: '0x03', KOLCodes: ['KOLCode_A', 'KOLCode_B', "KOLCode_C"], totalPoints: 15},
-  {uid: '0x01', KOLCodes: ['KOLCode_A', 'KOLCode_B'], totalPoints: 35},
-  {uid: '0x02', KOLCodes: ['KOLCode_A'], totalPoints: 345},
-  {uid: '0x03', KOLCodes: ['KOLCode_A', 'KOLCode_B', "KOLCode_C"], totalPoints: 15},
-  // {uid: '0x01', KOLCodes: ['KOLCode_A', 'KOLCode_B'], totalPoints: 35},
-  // {uid: '0x02', KOLCodes: ['KOLCode_A'], totalPoints: 345},
-  // {uid: '0x03', KOLCodes: ['KOLCode_A', 'KOLCode_B', "KOLCode_C"], totalPoints: 15},
-];
-
-const kolLeaderboard = [
-  {kolCode: 'KOLCode_A', numUniqueUsers: 3, totalPoints: 99},
-  {kolCode: 'KOLCode_B', numUniqueUsers: 3, totalPoints: 99},
-  {kolCode: 'KOLCode_C', numUniqueUsers: 3, totalPoints: 99},
-  {kolCode: 'KOLCode_A', numUniqueUsers: 3, totalPoints: 99},
-  {kolCode: 'KOLCode_A', numUniqueUsers: 3, totalPoints: 99},
-  {kolCode: 'KOLCode_A', numUniqueUsers: 3, totalPoints: 99},
-  {kolCode: 'KOLCode_B', numUniqueUsers: 7, totalPoints: 33 },
-  {kolCode: 'KOLCode_D', numUniqueUsers: 2, totalPoints: 84 },
-  {kolCode: 'KOLCode_C', numUniqueUsers: 9, totalPoints: 77 },
-  {kolCode: 'KOLCode_A', numUniqueUsers: 4, totalPoints: 15 },
-  {kolCode: 'KOLCode_A', numUniqueUsers: 3, totalPoints: 99},
-  {kolCode: 'KOLCode_A', numUniqueUsers: 3, totalPoints: 99},
-  {kolCode: 'KOLCode_A', numUniqueUsers: 3, totalPoints: 99},
-  {kolCode: 'KOLCode_A', numUniqueUsers: 3, totalPoints: 99},
-  {kolCode: 'KOLCode_A', numUniqueUsers: 3, totalPoints: 99},
-]
-
+let current_mode = LeaderboardMode.NONE;
+let userLeaderboard;
+let kolLeaderboard;
 let gameWindow;
-const itemsPerPage = 10;
+
+const itemsPerPage = 5;
 let currentPage = 1;
 let totalPages = -1;
 
@@ -100,45 +58,9 @@ const appkit = createAppKit({
   }
 })
 
-document.addEventListener('DOMContentLoaded', (event) => {
-  onDocumentLoaded(event);
-});
-
-window.onload = () => {
-  onWindowLoaded();
-};
-
-window.addEventListener('beforeunload', () => {
-  onWindowBeforeUnload();
-});
-
-
-
-document.getElementById('btn-nextPage').addEventListener('click', nextPage);
-document.getElementById('btn-previousPage').addEventListener('click', previousPage);
-document.getElementById('btn-openLeaderboard-individual').addEventListener('click', openLeaderboard_individual);
-document.getElementById('btn-openLeaderboard-kol').addEventListener('click', openLeaderboard_kol);
-document.getElementById('btn-closeLeaderboard').addEventListener('click', closeLeaderboard);
-
-
-openConnectModalBtn.addEventListener('click', () => appkit.open())
-manageWalletBtn.addEventListener('click', () => appkit.open())
-launhGameBtn.addEventListener('click', ()=> launchGame(getWalletAddress()));
-appkit.subscribeState( (newState) => onAppkitStateChanged());
-
-
-createApp(App).mount('#app')
-
-
-
-
-
-
-
 function onDocumentLoaded(event){
   setGameRunningState(false);
   closeLeaderboard();
-  //fetchLeaderboard();
 }
 
 function onWindowLoaded(){
@@ -152,18 +74,24 @@ function onWindowBeforeUnload(){
 
 
 function openLeaderboard(){
-  //fetchLeaderboard();
-
   document.getElementById('leaderboard').style.display = '';
   document.getElementById('leaderboard-bg').style.display = '';
+
+  // add a delay before close button appears
+  setTimeout( () => {
+    document.getElementById('btn-closeLeaderboard').classList.remove('hidden');
+    document.getElementById('btn-closeLeaderboard').classList.add('fadeIn');
+  }, 1000);
 }
 
 function closeLeaderboard() {
   document.getElementById('leaderboard').style.display = 'none';
   document.getElementById('leaderboard-bg').style.display = 'none';
+
+  document.getElementById('btn-closeLeaderboard').classList.add('hidden');
 }
 
-function switchToKOLLeaderboard(){
+function switchToKOLLeaderboard(kolLeaderboard){
   leaderboard_data = kolLeaderboard;
   current_mode = LeaderboardMode.KOL;
 
@@ -173,30 +101,32 @@ function switchToKOLLeaderboard(){
   refreshPaginationButtons();
 
   document.getElementById('self-ranking').style.display = 'none';
-  document.getElementById('leaderboard-label').textContent = 'KOL Leaderboard';
-  createHeaders(['KOL Codes', 'Unique Users', 'Total Points']);
+  document.getElementById('leaderboard-label').textContent = 'Community Leaderboard';
+  createHeaders(['Rank', 'KOL Codes', 'Unique Users', 'Total Points']);
 }
 
-function switchToIndividualLeaderboard(){
-  leaderboard_data = users;
+function switchToIndividualLeaderboard(userLeaderboard){
+  leaderboard_data = userLeaderboard;
   current_mode = LeaderboardMode.INDIVIDUAL;
 
   currentPage = 1;
-  totalPages = Math.ceil(users.length / itemsPerPage);
-  renderLeaderboardPage(users, currentPage);
+  totalPages = Math.ceil(userLeaderboard.length / itemsPerPage);
+  renderLeaderboardPage(userLeaderboard, currentPage);
   refreshPaginationButtons();
 
   document.getElementById('self-ranking').style.display = '';
   document.getElementById('leaderboard-label').textContent = 'Leaderboard';
-  createHeaders(['UID', 'KOL Codes', 'Total Points']);
+  createHeaders(['Rank', 'UID', 'KOL Codes', 'Total Points']);
 }
 
-function openLeaderboard_individual(){
-  switchToIndividualLeaderboard();
+async function openLeaderboard_individual(){
+  userLeaderboard = await fetchLeaderboard();
+  switchToIndividualLeaderboard(userLeaderboard);
   openLeaderboard();
 }
-function openLeaderboard_kol(){
-  switchToKOLLeaderboard();
+async function openLeaderboard_kol(){
+  kolLeaderboard = await fetchKOLLeaderboard();
+  switchToKOLLeaderboard(kolLeaderboard);
   openLeaderboard();
 }
 
@@ -294,20 +224,27 @@ async function fetchLeaderboard(){
 
   const result = await getRequest(url);
   if(result.success){
-    totalPages = Math.ceil(data.length / itemsPerPage),
+    const users = Object.values(result.data.users);
+    totalPages = Math.ceil(users.length / itemsPerPage),
     currentPage = 1;
-    renderLeaderboardPage(data, currentPage);
+    renderLeaderboardPage(users, currentPage);
+
+    return users;
   }
 }
 
 async function fetchKOLLeaderboard(){
   const url = 'https://4fi807plvh.execute-api.ap-southeast-1.amazonaws.com/default/SecretAgent_UserScoring?kol_leaderboard=true';
+  // const url = 'https://m4asjpzuia.execute-api.ap-southeast-1.amazonaws.com/default/testPythonAPICAll'
 
   const result = await getRequest(url);
   if(result.success){
-    totalPages = Math.ceil(data.length / itemsPerPage),
+    const kolLeaderboard = Object.entries(result.data);
+    totalPages = Math.ceil(kolLeaderboard.length / itemsPerPage),
     currentPage = 1;
-    renderLeaderboardPage(data, currentPage);
+    renderKOLLeaderboardPage(kolLeaderboard, currentPage);
+
+    return kolLeaderboard;
   }
 }
 
@@ -321,7 +258,6 @@ function nextPage(){
     renderLeaderboardPage(leaderboard_data, currentPage);
   else if(current_mode === LeaderboardMode.KOL)
     renderKOLLeaderboardPage(leaderboard_data, currentPage);
-  console.log('next');
 }
 
 function previousPage(){
@@ -343,6 +279,8 @@ function refreshPaginationButtons(){
     document.getElementById("btn-nextPage").classList.add('invisible');
   else 
     document.getElementById("btn-nextPage").classList.remove('invisible');
+
+  updatePageNumber();
 }
 
 function processPageItems(data, pageNumber){
@@ -359,6 +297,10 @@ function renderKOLLeaderboardPage(data, pageNumber){
 }
 
 function renderKOLLeaderboard(table){
+  const leaderboardContainer = document.getElementById('leaderboard-container');
+  leaderboardContainer.className = 'container';
+  leaderboardContainer.classList.add('moveRightToLeft');
+
   const leaderboardList = document.getElementById('leaderboard-list');
 
 
@@ -371,31 +313,44 @@ function renderKOLLeaderboard(table){
   }
 
   table.forEach((kolCodeEntry, index) => {
-    const rank = index+1;
-    addEntry(kolCodeEntry.kolCode, kolCodeEntry.numUniqueUsers, kolCodeEntry.totalPoints);
+    const key = kolCodeEntry[0];
+    const value = kolCodeEntry[1];
+
+    const rank = index + 1;
+    const kolCode = key;
+    const numUniqueUsers = value.UniqueUser;
+    const cumulativeScores = value.CumulativeScore;
+    
+    addScore_kol(rank, kolCode, numUniqueUsers, cumulativeScores);
   });
 
-  function addEntry(kolCode, numUniqueUsers, totalPoints){
+  function addScore_kol(rank, kolCode, numUniqueUsers, cumulativeScore){
     const scoreList = document.getElementById('leaderboard-list');
     const listItem = document.createElement('li');
-    
+
+    const rankSpan = document.createElement('span');
+    rankSpan.classList.add('span');
+    rankSpan.textContent = rank;
+    listItem.append(rankSpan);
+  
     const kolCodeSpan = document.createElement('span');
     kolCodeSpan.classList.add('span');
     kolCodeSpan.textContent = kolCode;
     listItem.append(kolCodeSpan);
-
+  
     const numUniqueUsersSpan = document.createElement('span');
     numUniqueUsersSpan.classList.add('span');
     numUniqueUsersSpan.textContent = numUniqueUsers;
     listItem.append(numUniqueUsersSpan);
-
-    const totalPointsSpan = document.createElement('span');
-    totalPointsSpan.classList.add('span');
-    totalPointsSpan.textContent = totalPoints;
-    listItem.append(totalPointsSpan);
-
+  
+    const cumulativeScoreSpan = document.createElement('span');
+    cumulativeScoreSpan.classList.add('span');
+    cumulativeScoreSpan.textContent = cumulativeScore;
+    listItem.append(cumulativeScoreSpan);
+  
     scoreList.appendChild(listItem);
   }
+  
 }
 
 function renderLeaderboardPage(data, pageNumber){
@@ -422,6 +377,10 @@ function createHeaders(headers){
 }
 
 function renderLeaderboard(table) {
+  const leaderboardContainer = document.getElementById('leaderboard-container');
+  leaderboardContainer.className = 'container';
+  leaderboardContainer.classList.add('moveLeftToRight');
+
   const leaderboardList = document.getElementById('leaderboard-list');
 
   // clear entries
@@ -431,148 +390,90 @@ function renderLeaderboard(table) {
     } else {
       break;
     }
-  }
-
+  }  
 
   table.forEach((user, index) => {
-    const rank = index+1;
-    addScore(user.uid, user.KOLCodes, user.totalPoints);
+    const rank = index + 1;
+    const uid = user.UID;
+    const KOLCodeUsed = user.KOLCodeUsed;
+    const userTotalPoints = user.UserTotalPoints;
+
+
+    addScore(rank, uid, KOLCodeUsed, userTotalPoints);
 
     // Update display for self ranking
-    if (user.uid === '0x01') {
-      updateRanking(user.totalPoints);
+    if (user.UID === getWalletAddress()) {
+      updateRanking(rank);
     }
   });
 
-  function addScore(uid, KOLCodes, totalPoints){
+  function addScore(rank, uid, KOLCodeUsed, totalPoints){
     const scoreList = document.getElementById('leaderboard-list');
     const listItem = document.createElement('li');
+
+    const rankSpan = document.createElement('span');
+    rankSpan.classList.add('span');
+    rankSpan.textContent = rank;
+    listItem.append(rankSpan);
     
     const uidSpan = document.createElement('span');
     uidSpan.classList.add('span');
     uidSpan.textContent = uid;
     listItem.append(uidSpan);
-
-    const KOLCodesSpan = document.createElement('span');
-    KOLCodesSpan.classList.add('span');
-
+  
+    const KOLCodeUsedSpan = document.createElement('span');
+    KOLCodeUsedSpan.classList.add('span');
+  
     let codes = '';
-    KOLCodes.forEach((code, index) =>{
+    KOLCodeUsed.forEach((code, index) =>{
       if(index == 0)
         codes+= `${code}`;
       else
         codes += `, ${code}`;
     });
-    KOLCodesSpan.textContent = codes;
-    listItem.append(KOLCodesSpan);
-
+    KOLCodeUsedSpan.textContent = codes;
+    listItem.append(KOLCodeUsedSpan);
+  
     const totalPointsSpan = document.createElement('span');
     totalPointsSpan.classList.add('span');
     totalPointsSpan.textContent = totalPoints;
     listItem.append(totalPointsSpan);
-
+  
     scoreList.appendChild(listItem);
   }
 }
 
 function updateRanking(ranking) {
   const rankingElement = document.getElementById('self-ranking');
-  rankingElement.textContent = `Your Total Points: ${ranking}`;
+  rankingElement.textContent = `Your Ranking: #${ranking}`;
+}
+
+function updatePageNumber(){
+  const pageNumberElement = document.getElementById('pageNumber');
+  pageNumberElement.textContent = `${currentPage}/${totalPages}`;
 }
 
 
-// async function fetchLeaderboard(all = false) {
-//   const itemsPerPage = 1;
-//   if(all){
-//     const url = `https://4fi807plvh.execute-api.ap-southeast-1.amazonaws.com/default/SecretAgent_UserScoring`;
-//     try {
-//       let response = await fetch(url, {
-//           method: 'GET', // or 'POST' if you're making a POST request
-//       });
-      
-//       if (!response.ok) {
-//           throw new Error(`HTTP error! Status: ${response.status}`);
-//       }
-//       let data = await response.json();
-//       console.log(data);
-
-//       totalPages = Math.ceil(data.length / itemsPerPage),
-//       currentPage = 1;
-//       renderLeaderboardPage(data, currentPage);
-
-//       // Process the leaderboard data here
-//     } catch (error) {
-//         console.error('Error fetching leaderboard:', error);
-//     }
-//   }
-//   else{
-//     const url = `https://4fi807plvh.execute-api.ap-southeast-1.amazonaws.com/default/SecretAgent_UserScoring?limit=${itemsPerPage}`;
-//     try {
-//         let response = await fetch(url, {
-//             method: 'GET', // or 'POST' if you're making a POST request
-//         });
-        
-//         if (!response.ok) {
-//             throw new Error(`HTTP error! Status: ${response.status}`);
-//         }
-//         let data = await response.json();
-//         console.log(data);
-  
-//         //renderLeaderboard(data);
-  
-//         // Process the leaderboard data here
-//     } catch (error) {
-//         console.error('Error fetching leaderboard:', error);
-//     }
-//   }
-
-// }
-
-
-// async function getRequest(url) {
-//   try {
-//     let response = await fetch(url, {
-//       method: 'GET'
-//     });
-//     if (!response.ok) {
-//       throw new Error(`HTTP error! Status: ${response.status}`);
-//     }
-//     let data = await response.json();
-//     console.log(data);
-
-//     return {
-//       success: true,
-//       data: data
-//     };
-//   } catch (error) {
-//     console.error('Error fetching leaderboard:', error);
-
-//     return {
-//       success: false,
-//       error: error.message
-//     };
-//   }
-// }
-
-
+/* 
+Sample response
+  {
+    "body": {"statusCode": 200, "body": "{\"USER_AFTER_LOGIN\": {\"UniqueUser\": 3, \"CumulativeScore\": 100}, \"KOL_A\": {\"UniqueUser\": 2, \"CumulativeScore\": 80}, \"KOL_C\": {\"UniqueUser\": 3, \"CumulativeScore\": 80}, \"KOL_D\": {\"UniqueUser\": 1, \"CumulativeScore\": 25}, \"KOL_B\": {\"UniqueUser\": 2, \"CumulativeScore\": 80}, \"202502\": {\"UniqueUser\": 1, \"CumulativeScore\": 60}}", "headers": {"Content-Type": "application/json"}}
+  }
+*/
 async function getRequest(url) {
   try {
     let response = await fetch(url, {
       method: 'GET'
     });
-    console.log(response);
+
     
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    
-    let responseData = await response.json();
 
-    
-    // Extract the actual data from the body
-    const body = JSON.parse(responseData.body);
-    const data = JSON.parse(body.body);
-    
+    let json = await response.json();
+    const data = JSON.parse(json.body);
+    console.log(json);
     console.log(data);
 
     return {
@@ -588,3 +489,32 @@ async function getRequest(url) {
     };
   }
 }
+
+document.addEventListener('DOMContentLoaded', (event) => {
+  onDocumentLoaded(event);
+});
+
+window.onload = () => {
+  onWindowLoaded();
+};
+
+window.addEventListener('beforeunload', () => {
+  onWindowBeforeUnload();
+});
+
+
+document.getElementById('btn-nextPage').addEventListener('click', nextPage);
+document.getElementById('btn-previousPage').addEventListener('click', previousPage);
+document.getElementById('btn-openLeaderboard-individual').addEventListener('click', openLeaderboard_individual);
+document.getElementById('btn-openLeaderboard-kol').addEventListener('click', openLeaderboard_kol);
+document.getElementById('btn-closeLeaderboard').addEventListener('click', closeLeaderboard);
+
+
+openConnectModalBtn.addEventListener('click', () => appkit.open())
+manageWalletBtn.addEventListener('click', () => appkit.open())
+launhGameBtn.addEventListener('click', ()=> launchGame(getWalletAddress()));
+appkit.subscribeState( (newState) => onAppkitStateChanged());
+
+
+createApp(App).mount('#app')
+
