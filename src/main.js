@@ -6,6 +6,8 @@ import { updateElementsVisibility } from './utils/dom'
 import { mainnet, arbitrum } from '@reown/appkit/networks'
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 
+
+
 // Get a project ID at https://cloud.reown.com
 // In local testing, gets from ".env" file. In production, gets from Github Secrets and Environment Variables in the repo.
 const projectId = import.meta.env.VITE_REOWN_PROJECT_ID;
@@ -31,6 +33,8 @@ let current_mode = LeaderboardMode.NONE;
 let userLeaderboard;
 let kolLeaderboard;
 let gameWindow;
+
+let referralCode = '';
 
 const itemsPerPage = 5;
 let currentPage = 1;
@@ -155,7 +159,7 @@ function setWalletAddressText(msg){
   walletAddressText.textContent = `${msg}`;
 }
 
-function launchGame(walletAddress){
+function launchGame(walletAddress, referralCode){
   if (isGameRunning()) {
     alert('The game is already running in another tab.');
     return;
@@ -164,7 +168,8 @@ function launchGame(walletAddress){
     setGameRunningState('true');
 
     const params = new URLSearchParams({
-      walletAddress: walletAddress
+      walletAddress: walletAddress,
+      referralCode: referralCode
     })
     openUrlWithParams(url, params);
   }
@@ -411,6 +416,16 @@ function renderLeaderboard(table) {
     const scoreList = document.getElementById('leaderboard-list');
     const listItem = document.createElement('li');
 
+    listItem.addEventListener('click', () => 
+      {
+        console.log(uid);
+        copyToClipboard(uid);
+      }
+    );
+    listItem.addEventListener('mouseover', () => {
+      console.log("copy uid to clipboard");
+    })
+
     const rankSpan = document.createElement('span');
     rankSpan.classList.add('span');
     rankSpan.textContent = rank;
@@ -470,11 +485,10 @@ async function getRequest(url) {
     if (!response.ok) {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
+    
 
-    let json = await response.json();
+    let json = await response.json(); 
     const data = JSON.parse(json.body);
-    console.log(json);
-    console.log(data);
 
     return {
       success: true,
@@ -489,6 +503,67 @@ async function getRequest(url) {
     };
   }
 }
+
+async function postRequest(url, params) {
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(params),
+    });
+
+    // Extract the status and the data
+    const status = response.status;
+    let json = await response.json(); 
+    const data = JSON.parse(json.body);
+
+    if (response.ok) {
+      // Request was successful
+      return { success: true, data: data };
+    } else {
+      // Request failed; include status and error message
+      return { success: false, error: data };
+    }
+  } catch (error) {
+    // Handle network or other unexpected errors
+    console.error('Error calling Lambda:', error);
+    return { success: false, error: error.message };
+  }
+}
+
+
+function isNullOrEmpty(str) {
+  return !str || str.trim().length === 0;
+}
+
+async function copyToClipboard(strToCopy){
+  try {
+    await navigator.clipboard.writeText(strToCopy);
+    alert('Copied to clipboard: ' + strToCopy);
+  } catch (err) {
+    console.error('Failed to copy text: ', err);
+  }
+}
+
+
+
+async function requestGenerateReferralCode(walletAddress, username=''){
+  const params = {
+    walletAddress: walletAddress,
+    username: username
+  }
+
+  const response = await postRequest('https://0cf9a7a7a2.execute-api.ap-southeast-1.amazonaws.com/default/SecretAgent_GenerateReferralCode', params);
+
+  if(!response.success){
+    alert("couldnt generate");
+  }
+
+  return response;
+}
+
 
 document.addEventListener('DOMContentLoaded', (event) => {
   onDocumentLoaded(event);
@@ -509,10 +584,23 @@ document.getElementById('btn-openLeaderboard-individual').addEventListener('clic
 document.getElementById('btn-openLeaderboard-kol').addEventListener('click', openLeaderboard_kol);
 document.getElementById('btn-closeLeaderboard').addEventListener('click', closeLeaderboard);
 
+// document.getElementById('btn-generateReferralCode').addEventListener('click', async () => {
+//   const result = await tryGenerateUserReferralCode(appkit.getAddress());
+//   if(result.success){
+//     console.log(result.referralCode);
+//     referralCode = result.referralCode;
+//   }
+// });
+
+document.getElementById('btn-generateReferralCode').addEventListener('click', async () => {
+    const response = await requestGenerateReferralCode(appkit.getAddress());
+    console.log(response.data);
+});
+
 
 openConnectModalBtn.addEventListener('click', () => appkit.open())
 manageWalletBtn.addEventListener('click', () => appkit.open())
-launhGameBtn.addEventListener('click', ()=> launchGame(getWalletAddress()));
+launhGameBtn.addEventListener('click', ()=> launchGame(getWalletAddress(), referralCode));
 appkit.subscribeState( (newState) => onAppkitStateChanged());
 
 
