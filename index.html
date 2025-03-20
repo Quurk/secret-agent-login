@@ -16,7 +16,7 @@
       <button onclick="closeModal()">Close</button>
     </div>
   </div> -->
-
+  <div id="popup">This is your message!</div>
   <div>    
     <div>
       <div data-disconnected-only style="margin-top: -1em;">    
@@ -66,8 +66,11 @@
             </div>
 
         </div>
-
         <div data-connected-only style="margin-top: 5em;">
+          <p class="p2">Referral Code:</p>
+          <button id="referralCode" class="btn-referralCode" class="p2">000000</button>
+        </div>
+        <div data-connected-only style="margin-top: 2em;">
           <p class="p2">Logged Into:</p>
           <p id="wallet-address" class="p2">Not Connected</p>
         </div>
@@ -106,6 +109,7 @@
 
 
   </div>
-  <button id="btn-generateReferralCode">Generate Referral Code</button>
+  <!-- <button id="btn-generateReferralCode">Generate Referral Code</button> -->
+
 </body>
 </html>

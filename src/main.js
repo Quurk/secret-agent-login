@@ -76,6 +76,16 @@ function onWindowBeforeUnload(){
   gameWindow.close();
 }
 
+function onAppkitDisconnected(){
+  setWalletAddressText("Not Connected");
+  openConnectModalBtn.textContent = "Connect";
+}
+function onAppkitConnected(){
+  setWalletAddressText(`${getWalletAddress()}`);
+  openConnectModalBtn.textContent = "Connected \u2713";
+
+  updateReferralCodeText();
+}
 
 function openLeaderboard(){
   document.getElementById('leaderboard').style.display = '';
@@ -141,12 +151,10 @@ function onAppkitStateChanged(newState){
   updateElementsVisibility(isConnected);
   
   if(!isConnected){
-    setWalletAddressText("Not Connected");
-    openConnectModalBtn.textContent = "Connect";
+    onAppkitDisconnected();
   }
   else{
-    setWalletAddressText(`${getWalletAddress()}`);
-    openConnectModalBtn.textContent = "Connected \u2713";
+    onAppkitConnected();
   }
 }
 
@@ -416,15 +424,15 @@ function renderLeaderboard(table) {
     const scoreList = document.getElementById('leaderboard-list');
     const listItem = document.createElement('li');
 
-    listItem.addEventListener('click', () => 
-      {
-        console.log(uid);
-        copyToClipboard(uid);
-      }
-    );
-    listItem.addEventListener('mouseover', () => {
-      console.log("copy uid to clipboard");
-    })
+    // listItem.addEventListener('click', () => 
+    //   {
+    //     console.log(uid);
+    //     copyToClipboard(uid);
+    //   }
+    // );
+    // listItem.addEventListener('mouseover', () => {
+    //   console.log("copy uid to clipboard");
+    // })
 
     const rankSpan = document.createElement('span');
     rankSpan.classList.add('span');
@@ -518,6 +526,7 @@ async function postRequest(url, params) {
     const status = response.status;
     let json = await response.json(); 
     const data = JSON.parse(json.body);
+    console.log(data);
 
     if (response.ok) {
       // Request was successful
@@ -541,7 +550,8 @@ function isNullOrEmpty(str) {
 async function copyToClipboard(strToCopy){
   try {
     await navigator.clipboard.writeText(strToCopy);
-    alert('Copied to clipboard: ' + strToCopy);
+ //   alert('Copied to clipboard: ' + strToCopy);
+  showPopup(`Copied to clipboard: "${strToCopy}"`);
   } catch (err) {
     console.error('Failed to copy text: ', err);
   }
@@ -564,6 +574,30 @@ async function requestGenerateReferralCode(walletAddress, username=''){
   return response;
 }
 
+async function updateReferralCodeText(){
+  const response = await requestGenerateReferralCode(getWalletAddress());
+  referralCode = response.data;
+
+  const btn = document.getElementById('referralCode');
+  btn.textContent = referralCode;
+  btn.addEventListener('click', () => copyToClipboard(referralCode));
+
+
+}
+
+function showPopup(msg) {
+  const popup = document.getElementById('popup');
+  
+  popup.textContent = msg;
+  popup.classList.add('show-popup');
+  popup.classList.remove('hide-popup');
+  
+  setTimeout(() => {
+    popup.classList.remove('show-popup');
+    popup.classList.add('hide-popup');
+
+  }, 3000); 
+}
 
 document.addEventListener('DOMContentLoaded', (event) => {
   onDocumentLoaded(event);
@@ -584,18 +618,13 @@ document.getElementById('btn-openLeaderboard-individual').addEventListener('clic
 document.getElementById('btn-openLeaderboard-kol').addEventListener('click', openLeaderboard_kol);
 document.getElementById('btn-closeLeaderboard').addEventListener('click', closeLeaderboard);
 
+
+
 // document.getElementById('btn-generateReferralCode').addEventListener('click', async () => {
-//   const result = await tryGenerateUserReferralCode(appkit.getAddress());
-//   if(result.success){
-//     console.log(result.referralCode);
-//     referralCode = result.referralCode;
-//   }
+//     const response = await requestGenerateReferralCode(getWalletAddress());
+//     console.log(response.data);
 // });
 
-document.getElementById('btn-generateReferralCode').addEventListener('click', async () => {
-    const response = await requestGenerateReferralCode(appkit.getAddress());
-    console.log(response.data);
-});
 
 
 openConnectModalBtn.addEventListener('click', () => appkit.open())
