@@ -21,6 +21,8 @@ const manageWalletBtn = document.getElementById('btn-manageWallet');
 
 const networks = [mainnet, arbitrum]
 
+const QP_REFERRAL_CODE = "referralCode";
+
 let leaderboard_data;
 
 const LeaderboardMode = {
@@ -62,30 +64,8 @@ const appkit = createAppKit({
   }
 })
 
-function onDocumentLoaded(event){
-  setGameRunningState(false);
-  closeLeaderboard();
-}
 
-function onWindowLoaded(){
-  setTimeout(type, 900);
-}
 
-function onWindowBeforeUnload(){
-  setGameRunningState('false');
-  gameWindow.close();
-}
-
-function onAppkitDisconnected(){
-  setWalletAddressText("Not Connected");
-  openConnectModalBtn.textContent = "Connect";
-}
-function onAppkitConnected(){
-  setWalletAddressText(`${getWalletAddress()}`);
-  openConnectModalBtn.textContent = "Connected \u2713";
-
-  updateReferralCodeText();
-}
 
 function openLeaderboard(){
   document.getElementById('leaderboard').style.display = '';
@@ -248,7 +228,6 @@ async function fetchLeaderboard(){
 
 async function fetchKOLLeaderboard(){
   const url = 'https://4fi807plvh.execute-api.ap-southeast-1.amazonaws.com/default/SecretAgent_UserScoring?kol_leaderboard=true';
-  // const url = 'https://m4asjpzuia.execute-api.ap-southeast-1.amazonaws.com/default/testPythonAPICAll'
 
   const result = await getRequest(url);
   if(result.success){
@@ -260,8 +239,6 @@ async function fetchKOLLeaderboard(){
     return kolLeaderboard;
   }
 }
-
-
 
 
 function nextPage(){
@@ -424,16 +401,6 @@ function renderLeaderboard(table) {
     const scoreList = document.getElementById('leaderboard-list');
     const listItem = document.createElement('li');
 
-    // listItem.addEventListener('click', () => 
-    //   {
-    //     console.log(uid);
-    //     copyToClipboard(uid);
-    //   }
-    // );
-    // listItem.addEventListener('mouseover', () => {
-    //   console.log("copy uid to clipboard");
-    // })
-
     const rankSpan = document.createElement('span');
     rankSpan.classList.add('span');
     rankSpan.textContent = rank;
@@ -547,16 +514,79 @@ function isNullOrEmpty(str) {
   return !str || str.trim().length === 0;
 }
 
-async function copyToClipboard(strToCopy){
+async function copyToClipboard(strToCopy, msg="Copied to clipboard"){
   try {
     await navigator.clipboard.writeText(strToCopy);
- //   alert('Copied to clipboard: ' + strToCopy);
-  showPopup(`Copied to clipboard: "${strToCopy}"`);
+    showPopup(msg);
   } catch (err) {
     console.error('Failed to copy text: ', err);
   }
 }
 
+
+function getQueryParameters(url){
+  const queryString = new URL(url).search;
+  const urlParams = new URLSearchParams(queryString);
+
+  return{
+    hasParams: urlParams.size > 0,
+    params: urlParams
+  }
+}
+
+
+function isReferralLink(){
+  const windowUrl = window.location.href;
+  const result = getQueryParameters(windowUrl);
+
+  if(result.hasParams){
+    if(result.params.get(QP_REFERRAL_CODE))
+      return true;
+  }
+  return false;
+}
+
+function getReferralCodeFromUrl(){
+  const windowUrl = window.location.href;
+  const result = getQueryParameters(windowUrl);
+
+  if(result.hasParams){
+    if(result.params.get(QP_REFERRAL_CODE))
+      return {
+        success: true,
+        referralCode: result.params.get(QP_REFERRAL_CODE)
+      }
+  }
+  return {
+    success: false,
+    referralCode: "invalidCode"
+  }
+}
+
+
+/*
+  If login page is opened with referralCode queryParam, launchGame() with that referralCode,
+  else launchGame() with self generated referral code
+*/
+async function initializeReferralCode(){
+  const response = await requestGenerateReferralCode(getWalletAddress());
+  const generatedCode = response.data;
+  updateReferralCodeText(generatedCode);
+  
+  if(isReferralLink()){
+    const result = getReferralCodeFromUrl();
+    if(result.success){
+      referralCode = result.referralCode;
+      console.log(`query code: ${referralCode}`);
+    }
+    else {
+      console.log("Error retrieving referralCode from URL");
+    }
+  }
+  else{
+    referralCode = generatedCode;
+  }
+}
 
 
 async function requestGenerateReferralCode(walletAddress, username=''){
@@ -566,23 +596,17 @@ async function requestGenerateReferralCode(walletAddress, username=''){
   }
 
   const response = await postRequest('https://0cf9a7a7a2.execute-api.ap-southeast-1.amazonaws.com/default/SecretAgent_GenerateReferralCode', params);
-
-  if(!response.success){
-    alert("couldnt generate");
-  }
-
   return response;
 }
 
-async function updateReferralCodeText(){
-  const response = await requestGenerateReferralCode(getWalletAddress());
-  referralCode = response.data;
+async function updateReferralCodeText(referralCode){
+  const urlWithoutQuery = window.location.origin + window.location.pathname;
 
-  const btn = document.getElementById('referralCode');
-  btn.textContent = referralCode;
-  btn.addEventListener('click', () => copyToClipboard(referralCode));
+  const btn = document.getElementById('referralLink');
+  btn.textContent = `${urlWithoutQuery}?referralCode=${referralCode}`;
 
-
+  const link = btn.textContent;
+  btn.addEventListener('click', () => copyToClipboard(link, "Copied link to clipboard"));
 }
 
 function showPopup(msg) {
@@ -597,6 +621,31 @@ function showPopup(msg) {
     popup.classList.add('hide-popup');
 
   }, 3000); 
+}
+
+function onWindowLoaded(){
+  setTimeout(type, 900);
+}
+
+function onDocumentLoaded(event){
+  setGameRunningState(false);
+  closeLeaderboard();
+}
+
+function onWindowBeforeUnload(){
+  setGameRunningState('false');
+  gameWindow.close();
+}
+
+function onAppkitDisconnected(){
+  setWalletAddressText("Not Connected");
+  openConnectModalBtn.textContent = "Connect";
+}
+function onAppkitConnected(){
+  setWalletAddressText(`${getWalletAddress()}`);
+  openConnectModalBtn.textContent = "Connected \u2713";
+
+  initializeReferralCode();
 }
 
 document.addEventListener('DOMContentLoaded', (event) => {
@@ -617,14 +666,6 @@ document.getElementById('btn-previousPage').addEventListener('click', previousPa
 document.getElementById('btn-openLeaderboard-individual').addEventListener('click', openLeaderboard_individual);
 document.getElementById('btn-openLeaderboard-kol').addEventListener('click', openLeaderboard_kol);
 document.getElementById('btn-closeLeaderboard').addEventListener('click', closeLeaderboard);
-
-
-
-// document.getElementById('btn-generateReferralCode').addEventListener('click', async () => {
-//     const response = await requestGenerateReferralCode(getWalletAddress());
-//     console.log(response.data);
-// });
-
 
 
 openConnectModalBtn.addEventListener('click', () => appkit.open())
