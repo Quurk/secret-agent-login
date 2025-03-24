@@ -38,6 +38,7 @@
   .leaderboard li{
     /* grid-template-columns: 3em 11em 6em 3em; */
     grid-template-columns: .5fr 1.5fr 1fr 1fr;
+    min-width: 92%;
   }
 
   .leaderboard-buttons .horizontalLayoutGrp{
