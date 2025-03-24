@@ -408,7 +408,7 @@ function renderLeaderboard(table) {
     
     const uidSpan = document.createElement('span');
     uidSpan.classList.add('span');
-    uidSpan.textContent = uid;
+    uidSpan.textContent = displayStartAndEnd(uid, 6, 6);
     listItem.append(uidSpan);
   
     const KOLCodeUsedSpan = document.createElement('span');
@@ -621,6 +621,14 @@ function showPopup(msg) {
     popup.classList.add('hide-popup');
 
   }, 3000); 
+}
+
+function displayStartAndEnd(string, frontChars = 5, backChars = 5) {
+  if (string.length <= frontChars + backChars) {
+    return string; // If the string is short, display it fully
+  } else {
+    return string.slice(0, frontChars) + "..." + string.slice(-backChars); // Show start and end
+  }
 }
 
 function onWindowLoaded(){
