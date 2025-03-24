@@ -602,9 +602,11 @@ async function requestGenerateReferralCode(walletAddress, username=''){
 async function updateReferralCodeText(referralCode){
   const urlWithoutQuery = window.location.origin + window.location.pathname;
 
-  const btn = document.getElementById('referralLink');
-  btn.textContent = `${urlWithoutQuery}?referralCode=${referralCode}`;
+  // const text = document.getElementById('referralLink');
+  // text.textContent = `${urlWithoutQuery}?referralCode=${referralCode}`;
 
+  const btn = document.getElementById('btn-referralLink');
+  btn.textContent =`${urlWithoutQuery}?referralCode=${referralCode}`;
   const link = btn.textContent;
   btn.addEventListener('click', () => copyToClipboard(link, "Copied link to clipboard"));
 }
@@ -684,3 +686,12 @@ appkit.subscribeState( (newState) => onAppkitStateChanged());
 
 createApp(App).mount('#app')
 
+// getRequest('https://2nea3db01j.execute-api.ap-southeast-1.amazonaws.com/default/SecretAgent_SubmitUsername')
+
+// function trySubmitUsername(walletAddress, username){
+//   const params = {
+//     walletAddress: walletAddress,
+//     username: username
+//   }
+//   postRequest('https://2nea3db01j.execute-api.ap-southeast-1.amazonaws.com/default/SecretAgent_SubmitUsername', params)
+// }
