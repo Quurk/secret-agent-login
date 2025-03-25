@@ -10,9 +10,12 @@
     max-width: 800px;
   }
 
-  .leaderboard li{
+  .li-individual{
+    grid-template-columns: 6em 20em 10em;
+  }
+
+  .li-kol{
     grid-template-columns: 3em 15em 15em 8em;
-    /* grid-template-columns: 1fr 3fr 2fr 1fr; */
   }
 
   .leaderboard-buttons .horizontalLayoutGrp{
@@ -35,10 +38,16 @@
     min-width: 350px;
     max-width: 600px
   }
-  .leaderboard li{
+
+  .li-individual{
+    grid-template-columns: 1fr 5fr 1fr;
+    min-width: 90%;
+  }
+
+  .li-kol{
     /* grid-template-columns: 3em 11em 6em 3em; */
-    grid-template-columns: .5fr 1.5fr 1fr 1fr;
-    min-width: 89%;
+    grid-template-columns: .5fr 2fr 1fr 1fr;
+    min-width: 90%;
   }
 
   .leaderboard-buttons .horizontalLayoutGrp{
@@ -418,6 +427,14 @@ h2{
   margin-bottom: 1em; 
   list-style-type: decimal-leading-zero;
   cursor:pointer;
+}
+
+.li-individual{
+  /* Intentionally left empty - controlled in @media */
+}
+
+.li-kol{
+  /* Intentionally left empty - controlled in @media */
 }
 
 .moveLeftToRight {

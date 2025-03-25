@@ -97,7 +97,10 @@ function switchToKOLLeaderboard(kolLeaderboard){
 
   document.getElementById('self-ranking').style.display = 'none';
   document.getElementById('leaderboard-label').textContent = 'Community Leaderboard';
-  createHeaders(['Rank', 'KOL Codes', 'Unique Users', 'Total Points']);
+  const headerItem = createHeaders(['Rank', 'KOL Codes', 'Unique Users', 'Total Points']);
+  headerItem.className = 'header';
+  headerItem.classList.add('li-kol');
+
 }
 
 function switchToIndividualLeaderboard(userLeaderboard){
@@ -111,7 +114,9 @@ function switchToIndividualLeaderboard(userLeaderboard){
 
   document.getElementById('self-ranking').style.display = '';
   document.getElementById('leaderboard-label').textContent = 'Leaderboard';
-  createHeaders(['Rank', 'UID', 'KOL Codes', 'Total Points']);
+  const headerItem = createHeaders(['Rank', 'Wallet Address', 'Total Points']);
+  headerItem.className = 'header';
+  headerItem.classList.add('li-individual');
 }
 
 async function openLeaderboard_individual(){
@@ -319,6 +324,7 @@ function renderKOLLeaderboard(table){
   function addScore_kol(rank, kolCode, numUniqueUsers, cumulativeScore){
     const scoreList = document.getElementById('leaderboard-list');
     const listItem = document.createElement('li');
+    listItem.classList.add("li-kol");
 
     const rankSpan = document.createElement('span');
     rankSpan.classList.add('span');
@@ -366,6 +372,8 @@ function createHeaders(headers){
     labelSpan.textContent = label;
     header.appendChild(labelSpan);
   });
+
+  return header;
 }
 
 function renderLeaderboard(table) {
@@ -402,6 +410,7 @@ function renderLeaderboard(table) {
   function addScore(rank, uid, KOLCodeUsed, totalPoints){
     const scoreList = document.getElementById('leaderboard-list');
     const listItem = document.createElement('li');
+    listItem.classList.add('li-individual');
 
     const rankSpan = document.createElement('span');
     rankSpan.classList.add('span');
@@ -413,18 +422,18 @@ function renderLeaderboard(table) {
     uidSpan.textContent = displayStartAndEnd(uid, 6, 6);
     listItem.append(uidSpan);
   
-    const KOLCodeUsedSpan = document.createElement('span');
-    KOLCodeUsedSpan.classList.add('span');
+    // const KOLCodeUsedSpan = document.createElement('span');
+    // KOLCodeUsedSpan.classList.add('span');
   
-    let codes = '';
-    KOLCodeUsed.forEach((code, index) =>{
-      if(index == 0)
-        codes+= `${code}`;
-      else
-        codes += `, ${code}`;
-    });
-    KOLCodeUsedSpan.textContent = codes;
-    listItem.append(KOLCodeUsedSpan);
+    // let codes = '';
+    // KOLCodeUsed.forEach((code, index) =>{
+    //   if(index == 0)
+    //     codes+= `${code}`;
+    //   else
+    //     codes += `, ${code}`;
+    // });
+    // KOLCodeUsedSpan.textContent = codes;
+    // listItem.append(KOLCodeUsedSpan);
   
     const totalPointsSpan = document.createElement('span');
     totalPointsSpan.classList.add('span');
