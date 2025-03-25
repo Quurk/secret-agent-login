@@ -14,6 +14,7 @@ const projectId = import.meta.env.VITE_REOWN_PROJECT_ID;
 const url = import.meta.env.VITE_GAME_URL;
 const url_leaderboard = import.meta.env.VITE_LEADERBOARD_URL;
 
+
 const launhGameBtn = document.getElementById('btn-launchGame')
 const openConnectModalBtn = document.getElementById('btn-connect')
 const walletAddressText = document.getElementById('wallet-address');
@@ -213,7 +214,8 @@ function type() {
 
 
 async function fetchLeaderboard(){
-  const url = 'https://4fi807plvh.execute-api.ap-southeast-1.amazonaws.com/default/SecretAgent_UserScoring?limit=100';
+  const limit = 100;
+  const url = `${url_leaderboard}?limit=${limit}`;
 
   const result = await getRequest(url);
   if(result.success){
@@ -227,7 +229,7 @@ async function fetchLeaderboard(){
 }
 
 async function fetchKOLLeaderboard(){
-  const url = 'https://4fi807plvh.execute-api.ap-southeast-1.amazonaws.com/default/SecretAgent_UserScoring?kol_leaderboard=true';
+  const url = `${url_leaderboard}?kol_leaderboard=true`;
 
   const result = await getRequest(url);
   if(result.success){
@@ -633,6 +635,15 @@ function displayStartAndEnd(string, frontChars = 5, backChars = 5) {
   }
 }
 
+// function trySubmitUsername(walletAddress, username){
+//   const params = {
+//     walletAddress: walletAddress,
+//     username: username
+//   }
+//   postRequest('https://2nea3db01j.execute-api.ap-southeast-1.amazonaws.com/default/SecretAgent_SubmitUsername', params)
+// }
+
+
 function onWindowLoaded(){
   setTimeout(type, 900);
 }
@@ -686,12 +697,3 @@ appkit.subscribeState( (newState) => onAppkitStateChanged());
 
 createApp(App).mount('#app')
 
-// getRequest('https://2nea3db01j.execute-api.ap-southeast-1.amazonaws.com/default/SecretAgent_SubmitUsername')
-
-// function trySubmitUsername(walletAddress, username){
-//   const params = {
-//     walletAddress: walletAddress,
-//     username: username
-//   }
-//   postRequest('https://2nea3db01j.execute-api.ap-southeast-1.amazonaws.com/default/SecretAgent_SubmitUsername', params)
-// }

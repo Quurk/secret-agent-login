@@ -37,6 +37,7 @@ jobs:
           env:
             VITE_REOWN_PROJECT_ID: ${{ secrets.VITE_REOWN_PROJECT_ID }}
             VITE_GAME_URL: ${{ vars.VITE_GAME_URL }}
+            VITE_LEADERBOARD_URL: ${{ vars.VITE_LEADERBOARD_URL }}
 
         - name: Deploy to GitHub Pages
           uses: peaceiris/actions-gh-pages@v3
@@ -70,6 +71,7 @@ jobs:
         env:
           VITE_REOWN_PROJECT_ID: ${{ secrets.VITE_REOWN_PROJECT_ID }}
           VITE_GAME_URL: ${{ vars.VITE_GAME_URL }}
+          VITE_LEADERBOARD_URL: ${{ vars.VITE_LEADERBOARD_URL }}
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
